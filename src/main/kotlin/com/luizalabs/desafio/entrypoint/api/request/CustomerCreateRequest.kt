@@ -3,7 +3,7 @@ package com.luizalabs.desafio.entrypoint.api.request
 import io.swagger.annotations.ApiModelProperty
 import javax.validation.constraints.NotBlank
 
-data class CustomerRequest(
+data class CustomerCreateRequest(
     @ApiModelProperty(required = true, value = "Nome do cliente")
     @field:NotBlank
     val name: String,

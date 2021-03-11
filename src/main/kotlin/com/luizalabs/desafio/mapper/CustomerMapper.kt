@@ -1,7 +1,8 @@
 package com.luizalabs.desafio.mapper
 
 import com.luizalabs.desafio.core.domain.Customer
-import com.luizalabs.desafio.entrypoint.api.request.CustomerRequest
+import com.luizalabs.desafio.entrypoint.api.request.CustomerCreateRequest
+import com.luizalabs.desafio.entrypoint.api.request.CustomerUpdateRequest
 import com.luizalabs.desafio.entrypoint.api.response.CustomerResponse
 import com.luizalabs.desafio.provider.data.table.CustomerTable
 import java.time.format.DateTimeFormatter
@@ -26,7 +27,7 @@ fun Customer.toTable(): CustomerTable {
     )
 }
 
-fun CustomerRequest.toCore(): Customer {
+fun CustomerCreateRequest.toCore(): Customer {
     return Customer(
         name = name,
         email = email
@@ -39,6 +40,6 @@ fun Customer.toCustomerResponse(): CustomerResponse {
         name = name,
         email = email,
         createdAt = createdAt.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-        updatedAt = if (updatedAt != null) updatedAt!!.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) else "-"
+        updatedAt = if (updatedAt != null) updatedAt!!.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) else null
     )
 }

@@ -17,5 +17,5 @@ data class CustomerResponse(
     val createdAt: String,
 
     @ApiModelProperty(required = true, value = "Data de atualização do registro", example = "11/03/2021")
-    val updatedAt: String
+    val updatedAt: String? = null
 )
