@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${SPRING_DATASOURCE_HOST:localhost}:${SPRING_DATASOURCE_PORT:5432}/${SPRING_DATASOURCE_DBNAME:desafio}
+    username: ${SPRING_DATASOURCE_USERNAME:desafio}
+    password: ${SPRING_DATASOURCE_PASSWORD:desafio}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: ${SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE:10}
+
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+    generate-ddl: false
+
+  flyway:
+    enabled: ${SPRING_FLYWAY_ENABLED:true}
+    url: jdbc:postgresql://${SPRING_DATASOURCE_HOST:localhost}:${SPRING_DATASOURCE_PORT:5432}/${SPRING_DATASOURCE_DBNAME:desafio}
+    user: ${SPRING_DATASOURCE_USERNAME:desafio}
+    password: ${SPRING_DATASOURCE_PASSWORD:desafio}

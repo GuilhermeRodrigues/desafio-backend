@@ -1,0 +1,12 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_DB=desafio
+      - POSTGRES_USER=desafio
+      - POSTGRES_PASSWORD=desafio
+    expose:
+      - '5432'
+    ports:
+      - '5432:5432'
