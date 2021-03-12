@@ -1,3 +1,9 @@
+application:
+  client:
+    product:
+      url: ${APPLICATION_CLIENT_ODIN_URL:http://challenge-api.luizalabs.com/api}
+      timeout: ${APPLICATION_CLIENT_ODIN_TIMEOUT:10000}
+
 spring:
   datasource:
     url: jdbc:postgresql://${SPRING_DATASOURCE_HOST:localhost}:${SPRING_DATASOURCE_PORT:5432}/${SPRING_DATASOURCE_DBNAME:desafio}

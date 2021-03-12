@@ -1,22 +1,24 @@
 package com.luizalabs.desafio.entrypoint.api
 
 import com.luizalabs.desafio.annotation.Endpoint
-import com.luizalabs.desafio.core.interactor.CustomerCreateInteractor
-import com.luizalabs.desafio.core.interactor.CustomerDeleteInteractor
-import com.luizalabs.desafio.core.interactor.CustomerFindByIdInteractor
-import com.luizalabs.desafio.core.interactor.CustomerUpdateInteractor
+import com.luizalabs.desafio.core.interactor.*
 import com.luizalabs.desafio.entrypoint.api.request.CustomerCreateRequest
 import com.luizalabs.desafio.entrypoint.api.request.CustomerUpdateRequest
 import com.luizalabs.desafio.entrypoint.api.response.CustomerResponse
 import com.luizalabs.desafio.mapper.toCustomerResponse
+import com.luizalabs.desafio.util.toResponseEntity
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiResponse
 import io.swagger.annotations.ApiResponses
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import java.util.UUID
+import javax.validation.constraints.Max
 
 @Validated
 @Endpoint("/v1/customers")
@@ -25,7 +27,8 @@ class CustomerEndpoint(
     private val customerCreateInteractor: CustomerCreateInteractor,
     private val customerUpdateInteractor: CustomerUpdateInteractor,
     private val customerDeleteInteractor: CustomerDeleteInteractor,
-    private val customerFindByIdInteractor: CustomerFindByIdInteractor
+    private val customerFindByIdInteractor: CustomerFindByIdInteractor,
+    private val customerFindAllInteractor: CustomerFindAllInteractor
 ) {
     @ApiOperation(value = "Criar um cliente")
     @PostMapping
@@ -82,5 +85,29 @@ class CustomerEndpoint(
     @ResponseStatus(HttpStatus.OK)
     fun findById(@PathVariable id: UUID): CustomerResponse {
         return this.customerFindByIdInteractor.execute(id).toCustomerResponse()
+    }
+
+    @ApiOperation(value = "Listar os clientes")
+    @GetMapping
+    @ApiResponses(
+        value =
+        [
+            ApiResponse(code = 200, message = "OK"),
+            ApiResponse(code = 404, message = "Página não encontrada")
+        ]
+    )
+    @ResponseStatus(HttpStatus.OK)
+    fun findAll(
+        @RequestParam(required = false, name = "_page")
+        page: Int? = null,
+
+        @RequestParam(required = false, name = "_limit")
+        @Max(1000, message = "O valor de limit deve ser menor ou igual a 1000")
+        limit: Int? = null
+    ): ResponseEntity<List<CustomerResponse>> {
+        return this.customerFindAllInteractor
+            .execute(PageRequest.of(page ?: 0, limit ?: 10, Sort.by("createdAt").descending()))
+            .map { it.toCustomerResponse() }
+            .toResponseEntity()
     }
 }
