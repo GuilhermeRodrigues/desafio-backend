@@ -16,6 +16,9 @@ data class CustomerResponse(
     @ApiModelProperty(required = true, value = "Data de criação do registro", example = "11/03/2021")
     val createdAt: String,
 
-    @ApiModelProperty(required = true, value = "Data de atualização do registro", example = "11/03/2021")
-    val updatedAt: String? = null
+    @ApiModelProperty(required = true, value = "Data de atualização do registro", example = "12/03/2021")
+    val updatedAt: String? = null,
+
+    @ApiModelProperty(required = true, value = "Data de exclusão do registro", example = "13/03/2021")
+    val deletedAt: String? = null
 )

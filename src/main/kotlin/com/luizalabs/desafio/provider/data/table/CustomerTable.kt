@@ -29,7 +29,11 @@ data class CustomerTable(
 
         @Column(name = "updated_at", nullable = true)
         @LastModifiedDate
-        var updatedAt: LocalDateTime? = null
+        var updatedAt: LocalDateTime? = null,
+
+        @Column(name = "deleted_at", nullable = true)
+        @LastModifiedDate
+        var deletedAt: LocalDateTime? = null
 ) {
         @PreUpdate
         fun setLastUpdate() {

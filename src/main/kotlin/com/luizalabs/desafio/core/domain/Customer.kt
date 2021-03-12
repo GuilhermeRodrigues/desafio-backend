@@ -8,5 +8,6 @@ data class Customer(
     val name: String,
     val email: String,
     val createdAt: LocalDateTime = LocalDateTime.now(),
-    var updatedAt: LocalDateTime? = null
+    var updatedAt: LocalDateTime? = null,
+    var deletedAt: LocalDateTime? = null
 )

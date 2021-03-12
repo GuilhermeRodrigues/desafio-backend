@@ -4,7 +4,8 @@ CREATE TABLE customer
     name        varchar          NOT NULL,
     email       varchar          NOT NULL,
     created_at  timestamp        NOT NULL DEFAULT now(),
-    updated_at  timestamp        NULL
+    updated_at  timestamp        NULL,
+    deleted_at  timestamp        NULL
 );
 
 CREATE UNIQUE INDEX customer_id_unq ON customer (id);
