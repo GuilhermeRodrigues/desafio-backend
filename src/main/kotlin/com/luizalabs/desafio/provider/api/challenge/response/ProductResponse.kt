@@ -1,6 +1,7 @@
 package com.luizalabs.desafio.provider.api.challenge.response
 
 import java.math.BigDecimal
+import java.util.UUID
 
 data class ProductResponse(
     val meta: ProductMeta,
@@ -16,6 +17,7 @@ data class Product(
     val price: BigDecimal,
     val image: String,
     val brand: String,
-    val id: String,
-    val title: String
+    val id: UUID,
+    val title: String,
+    val reviewScore: Float? = null
 )

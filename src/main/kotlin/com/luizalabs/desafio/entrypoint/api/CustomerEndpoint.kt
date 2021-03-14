@@ -2,10 +2,13 @@ package com.luizalabs.desafio.entrypoint.api
 
 import com.luizalabs.desafio.annotation.Endpoint
 import com.luizalabs.desafio.core.interactor.*
+import com.luizalabs.desafio.entrypoint.api.request.CustomerAddFavoriteRequest
 import com.luizalabs.desafio.entrypoint.api.request.CustomerCreateRequest
 import com.luizalabs.desafio.entrypoint.api.request.CustomerUpdateRequest
 import com.luizalabs.desafio.entrypoint.api.response.CustomerResponse
+import com.luizalabs.desafio.entrypoint.api.response.FavoriteResponse
 import com.luizalabs.desafio.mapper.toCustomerResponse
+import com.luizalabs.desafio.mapper.toFavoriteResponse
 import com.luizalabs.desafio.util.toResponseEntity
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -28,7 +31,8 @@ class CustomerEndpoint(
     private val customerUpdateInteractor: CustomerUpdateInteractor,
     private val customerDeleteInteractor: CustomerDeleteInteractor,
     private val customerFindByIdInteractor: CustomerFindByIdInteractor,
-    private val customerFindAllInteractor: CustomerFindAllInteractor
+    private val customerFindAllInteractor: CustomerFindAllInteractor,
+    private val customerAddFavoriteInteractor: CustomerAddFavoriteInteractor
 ) {
     @ApiOperation(value = "Criar um cliente")
     @PostMapping
@@ -109,5 +113,21 @@ class CustomerEndpoint(
             .execute(PageRequest.of(page ?: 0, limit ?: 10, Sort.by("createdAt").descending()))
             .map { it.toCustomerResponse() }
             .toResponseEntity()
+    }
+
+    @ApiOperation(value = "Adicionar um favorito")
+    @PostMapping("/{customerId}/favorites")
+    @ApiResponses(
+        value =
+        [
+            ApiResponse(code = 201, message = "OK"),
+            ApiResponse(code = 404, message = "Cliente não encontrado"),
+            ApiResponse(code = 404, message = "Produto não encontrado"),
+            ApiResponse(code = 409, message = "Produto já adicionado como favorito")
+        ]
+    )
+    @ResponseStatus(HttpStatus.CREATED)
+    fun addFavorite(@PathVariable customerId: UUID, @RequestBody(required = true) request: CustomerAddFavoriteRequest): FavoriteResponse {
+        return this.customerAddFavoriteInteractor.execute(customerId = customerId,customerAddFavoriteRequest = request).toFavoriteResponse()
     }
 }
