@@ -6,7 +6,7 @@ import com.luizalabs.desafio.core.domain.FavoritesList
 import com.luizalabs.desafio.core.exception.FavoriteAlreadyAddedException
 import com.luizalabs.desafio.core.gateway.*
 import com.luizalabs.desafio.core.interactor.CustomerAddFavoriteInteractor
-import com.luizalabs.desafio.entrypoint.api.request.CustomerAddFavoriteRequest
+import com.luizalabs.desafio.entrypoint.api.request.CustomerFavoriteRequest
 import java.util.UUID
 
 @UseCase
@@ -14,11 +14,11 @@ internal class CustomerAddFavoriteUseCase(
     private val customerFindByIdGateway: CustomerFindByIdGateway,
     private val favoritesListFindByCustomerIdGateway: FavoritesListFindByCustomerIdGateway,
     private val favoritesListSaveGateway: FavoritesListSaveGateway,
-    private val favoriteFindByFavoritesListIdAndProductIdGateway: FavoriteFindByFavoritesListIdAndProductIdGateway,
+    private val favoriteFindByFavoritesListIdAndDeletedAtIsNullGateway: FavoriteFindByFavoritesListIdAndDeletedAtIsNullGateway,
     private val favoriteSaveGateway: FavoriteSaveGateway,
     private val productFindByIdGateway: ProductFindByIdGateway
 ) : CustomerAddFavoriteInteractor {
-    override fun execute(customerId: UUID, customerAddFavoriteRequest: CustomerAddFavoriteRequest): Favorite {
+    override fun execute(customerId: UUID, customerFavoriteRequest: CustomerFavoriteRequest): Favorite {
         val customer = this.customerFindByIdGateway.findById(id = customerId)
 
         var favoritesList = this.favoritesListFindByCustomerIdGateway
@@ -33,22 +33,21 @@ internal class CustomerAddFavoriteUseCase(
                 )
         }
 
-        var favorite = this.favoriteFindByFavoritesListIdAndProductIdGateway
-            .findByFavoritesListIdAndProductId(favoritesListId = favoritesList.id, productId = customerAddFavoriteRequest.productId)
+        val favoriteAlreadyAdded = this.favoriteFindByFavoritesListIdAndDeletedAtIsNullGateway
+            .findByFavoritesListIdAndDeletedAtIsNull(favoritesListId = favoritesList.id)
+            ?.any { it.product.id == customerFavoriteRequest.productId }
 
-        if (favorite != null) {
+        if (favoriteAlreadyAdded == true) {
             throw FavoriteAlreadyAddedException()
         }
 
-        val product = productFindByIdGateway.findById(id = customerAddFavoriteRequest.productId)
+        val product = productFindByIdGateway.findById(id = customerFavoriteRequest.productId)
 
-        favorite = this.favoriteSaveGateway.save(
+        return favoriteSaveGateway.save(
             Favorite(
-                productId = product.id,
-                favoritesList = favoritesList
+                favoritesList = favoritesList,
+                product = product
             )
         )
-
-        return favorite
     }
 }

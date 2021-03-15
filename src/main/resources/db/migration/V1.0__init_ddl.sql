@@ -27,10 +27,10 @@ CREATE TABLE favorite
 (
     id                  uuid PRIMARY KEY NOT NULL,
     favorites_list_id   uuid             NOT NULL,
-    product_id          uuid             NOT NULL,
-    added_at            timestamp        NOT NULL DEFAULT now(),
-    CONSTRAINT favorite_favorites_list_fkey FOREIGN KEY (favorites_list_id) REFERENCES favorites_list (id),
-    CONSTRAINT favorite_list_id_product_id_unq UNIQUE (favorites_list_id, product_id)
+    product             jsonb            NOT NULL,
+    created_at          timestamp        NOT NULL DEFAULT now(),
+    deleted_at          timestamp        NULL,
+    CONSTRAINT favorite_favorites_list_fkey FOREIGN KEY (favorites_list_id) REFERENCES favorites_list (id)
 );
 
 CREATE UNIQUE INDEX favorite_id_unq ON favorite (id);

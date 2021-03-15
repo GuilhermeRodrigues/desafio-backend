@@ -2,7 +2,7 @@ package com.luizalabs.desafio.entrypoint.api
 
 import com.luizalabs.desafio.annotation.Endpoint
 import com.luizalabs.desafio.core.interactor.*
-import com.luizalabs.desafio.entrypoint.api.request.CustomerAddFavoriteRequest
+import com.luizalabs.desafio.entrypoint.api.request.CustomerFavoriteRequest
 import com.luizalabs.desafio.entrypoint.api.request.CustomerCreateRequest
 import com.luizalabs.desafio.entrypoint.api.request.CustomerUpdateRequest
 import com.luizalabs.desafio.entrypoint.api.response.CustomerResponse
@@ -32,7 +32,9 @@ class CustomerEndpoint(
     private val customerDeleteInteractor: CustomerDeleteInteractor,
     private val customerFindByIdInteractor: CustomerFindByIdInteractor,
     private val customerFindAllInteractor: CustomerFindAllInteractor,
-    private val customerAddFavoriteInteractor: CustomerAddFavoriteInteractor
+    private val customerAddFavoriteInteractor: CustomerAddFavoriteInteractor,
+    private val customerFindFavoritesInteractor: CustomerFindFavoritesInteractor,
+    private val customerRemoveFavoriteInteractor: CustomerRemoveFavoriteInteractor
 ) {
     @ApiOperation(value = "Criar um cliente")
     @PostMapping
@@ -127,7 +129,43 @@ class CustomerEndpoint(
         ]
     )
     @ResponseStatus(HttpStatus.CREATED)
-    fun addFavorite(@PathVariable customerId: UUID, @RequestBody(required = true) request: CustomerAddFavoriteRequest): FavoriteResponse {
-        return this.customerAddFavoriteInteractor.execute(customerId = customerId,customerAddFavoriteRequest = request).toFavoriteResponse()
+    fun addFavorite(@PathVariable customerId: UUID, @RequestBody(required = true) request: CustomerFavoriteRequest): FavoriteResponse {
+        val favorite = this.customerAddFavoriteInteractor.execute(customerId = customerId,customerFavoriteRequest = request)
+
+        return favorite.toFavoriteResponse(listOf(favorite.product))
+    }
+
+    @ApiOperation(value = "Listar os favoritos do cliente")
+    @GetMapping("/{customerId}/favorites")
+    @ApiResponses(
+        value =
+        [
+            ApiResponse(code = 200, message = "OK"),
+            ApiResponse(code = 404, message = "Favorito não encontrado")
+        ]
+    )
+    @ResponseStatus(HttpStatus.OK)
+    fun findFavorites(@PathVariable customerId: UUID): FavoriteResponse {
+        val favorites = this.customerFindFavoritesInteractor
+            .execute(customerId)
+            
+        return favorites.first().toFavoriteResponse(favorites.map { it.product })
+    }
+
+    @ApiOperation(value = "Remover um favorito")
+    @DeleteMapping("/{customerId}/favorites")
+    @ApiResponses(
+        value =
+        [
+            ApiResponse(code = 200, message = "OK"),
+            ApiResponse(code = 404, message = "Cliente não encontrado"),
+            ApiResponse(code = 404, message = "Favorito não encontrado")
+        ]
+    )
+    @ResponseStatus(HttpStatus.OK)
+    fun removeFavorite(@PathVariable customerId: UUID, @RequestBody(required = true) request: CustomerFavoriteRequest): FavoriteResponse {
+        val favorite = this.customerRemoveFavoriteInteractor.execute(customerId = customerId,customerFavoriteRequest = request)
+
+        return favorite.toFavoriteResponse(listOf(favorite.product))
     }
 }

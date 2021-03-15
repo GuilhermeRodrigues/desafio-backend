@@ -7,5 +7,5 @@ import java.util.UUID
 
 @Repository
 interface FavoriteRepository : JpaRepository<FavoriteTable, UUID> {
-    fun findByFavoritesListIdAndProductId(favoritesListId: UUID, productId: UUID): FavoriteTable?
+    fun findByFavoritesListIdAndDeletedAtIsNull(favoritesListId: UUID): List<FavoriteTable>?
 }

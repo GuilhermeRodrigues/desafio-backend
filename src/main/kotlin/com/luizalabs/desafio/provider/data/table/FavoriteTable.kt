@@ -1,6 +1,11 @@
 package com.luizalabs.desafio.provider.data.table
 
+import com.luizalabs.desafio.provider.api.challenge.response.Product
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType
+import org.hibernate.annotations.Type
+import org.hibernate.annotations.TypeDef
 import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.persistence.Column
@@ -13,6 +18,10 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "favorite")
+@TypeDef(
+    name = "jsonb",
+    typeClass = JsonBinaryType::class
+)
 data class FavoriteTable(
         @Id
         @Column(nullable = false)
@@ -22,10 +31,15 @@ data class FavoriteTable(
         @JoinColumn(name = "favorites_list_id", nullable = false)
         val favoritesList: FavoritesListTable,
 
-        @Column(name = "product_id", nullable = false)
-        val productId: UUID,
+        @Type(type = "jsonb")
+        @Column(nullable = false, name = "product", columnDefinition = "jsonb")
+        val product: Product,
 
-        @Column(name = "added_at", nullable = false, updatable = false)
+        @Column(name = "created_at", nullable = false, updatable = false)
         @CreatedDate
-        val addedAt: LocalDateTime = LocalDateTime.now()
+        val createdAt: LocalDateTime = LocalDateTime.now(),
+
+        @Column(name = "deleted_at", nullable = true)
+        @LastModifiedDate
+        var deletedAt: LocalDateTime? = null
 )

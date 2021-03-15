@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModelProperty
 import java.util.UUID
 import javax.validation.constraints.NotBlank
 
-data class CustomerAddFavoriteRequest(
+data class CustomerFavoriteRequest(
     @ApiModelProperty(required = true, value = "Id do produto")
     @field:NotBlank
     val productId: UUID
