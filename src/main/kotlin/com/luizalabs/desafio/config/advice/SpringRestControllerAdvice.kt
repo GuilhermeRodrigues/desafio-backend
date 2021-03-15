@@ -15,20 +15,19 @@ class SpringRestControllerAdvice {
         return ResponseEntity
             .status(error.statusCode)
             .body(error.getBody())
-
     }
 
     @ExceptionHandler(Throwable::class)
     fun exceptionsGeneric(error: Throwable): ResponseEntity<BaseExceptionResponse> {
         return ResponseEntity
             .status(500)
-            .body(BaseExceptionResponse(
-                errorCode = 5000,
-                statusCode = 500,
-                userMessage = error.message,
-                developerMessage = error.message
-            ))
-
+            .body(
+                BaseExceptionResponse(
+                    errorCode = 5000,
+                    statusCode = 500,
+                    userMessage = error.message,
+                    developerMessage = error.message
+                )
+            )
     }
 }
-

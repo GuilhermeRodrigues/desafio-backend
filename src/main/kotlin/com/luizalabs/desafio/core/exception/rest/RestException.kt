@@ -19,4 +19,3 @@ abstract class RestException(developer: String) : RuntimeException(developer) {
         )
     }
 }
-

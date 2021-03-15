@@ -2,7 +2,7 @@ package com.luizalabs.desafio.mapper
 
 import com.luizalabs.desafio.core.domain.Favorite
 import com.luizalabs.desafio.entrypoint.api.response.FavoriteResponse
-import com.luizalabs.desafio.provider.api.challenge.response.Product
+import com.luizalabs.desafio.provider.api.product.response.Product
 import com.luizalabs.desafio.provider.data.table.FavoriteTable
 
 fun FavoriteTable.toCore(): Favorite {

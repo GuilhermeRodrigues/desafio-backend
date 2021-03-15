@@ -1,9 +1,16 @@
 package com.luizalabs.desafio.entrypoint.api
 
 import com.luizalabs.desafio.annotation.Endpoint
-import com.luizalabs.desafio.core.interactor.*
-import com.luizalabs.desafio.entrypoint.api.request.CustomerFavoriteRequest
+import com.luizalabs.desafio.core.interactor.CustomerAddFavoriteInteractor
+import com.luizalabs.desafio.core.interactor.CustomerCreateInteractor
+import com.luizalabs.desafio.core.interactor.CustomerDeleteInteractor
+import com.luizalabs.desafio.core.interactor.CustomerFindAllInteractor
+import com.luizalabs.desafio.core.interactor.CustomerFindByIdInteractor
+import com.luizalabs.desafio.core.interactor.CustomerFindFavoritesInteractor
+import com.luizalabs.desafio.core.interactor.CustomerRemoveFavoriteInteractor
+import com.luizalabs.desafio.core.interactor.CustomerUpdateInteractor
 import com.luizalabs.desafio.entrypoint.api.request.CustomerCreateRequest
+import com.luizalabs.desafio.entrypoint.api.request.CustomerFavoriteRequest
 import com.luizalabs.desafio.entrypoint.api.request.CustomerUpdateRequest
 import com.luizalabs.desafio.entrypoint.api.response.CustomerResponse
 import com.luizalabs.desafio.entrypoint.api.response.FavoriteResponse
@@ -19,7 +26,14 @@ import org.springframework.data.domain.Sort
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.ResponseStatus
 import java.util.UUID
 import javax.validation.constraints.Max
 
@@ -40,10 +54,10 @@ class CustomerEndpoint(
     @PostMapping
     @ApiResponses(
         value =
-        [
-            ApiResponse(code = 201, message = "OK"),
-            ApiResponse(code = 409, message = "Email já utilizado")
-        ]
+            [
+                ApiResponse(code = 201, message = "OK"),
+                ApiResponse(code = 409, message = "Email já utilizado")
+            ]
     )
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody(required = true) request: CustomerCreateRequest): CustomerResponse {
@@ -54,11 +68,11 @@ class CustomerEndpoint(
     @PutMapping("/{id}")
     @ApiResponses(
         value =
-        [
-            ApiResponse(code = 200, message = "OK"),
-            ApiResponse(code = 404, message = "Cliente não encontrado"),
-            ApiResponse(code = 409, message = "Email já utilizado")
-        ]
+            [
+                ApiResponse(code = 200, message = "OK"),
+                ApiResponse(code = 404, message = "Cliente não encontrado"),
+                ApiResponse(code = 409, message = "Email já utilizado")
+            ]
     )
     @ResponseStatus(HttpStatus.OK)
     fun update(@PathVariable id: UUID, @RequestBody(required = true) request: CustomerUpdateRequest): CustomerResponse {
@@ -69,10 +83,10 @@ class CustomerEndpoint(
     @DeleteMapping("/{id}")
     @ApiResponses(
         value =
-        [
-            ApiResponse(code = 200, message = "OK"),
-            ApiResponse(code = 404, message = "Cliente não encontrado")
-        ]
+            [
+                ApiResponse(code = 200, message = "OK"),
+                ApiResponse(code = 404, message = "Cliente não encontrado")
+            ]
     )
     @ResponseStatus(HttpStatus.OK)
     fun delete(@PathVariable id: UUID): CustomerResponse {
@@ -83,10 +97,10 @@ class CustomerEndpoint(
     @GetMapping("/{id}")
     @ApiResponses(
         value =
-        [
-            ApiResponse(code = 200, message = "OK"),
-            ApiResponse(code = 404, message = "Cliente não encontrado")
-        ]
+            [
+                ApiResponse(code = 200, message = "OK"),
+                ApiResponse(code = 404, message = "Cliente não encontrado")
+            ]
     )
     @ResponseStatus(HttpStatus.OK)
     fun findById(@PathVariable id: UUID): CustomerResponse {
@@ -97,10 +111,10 @@ class CustomerEndpoint(
     @GetMapping
     @ApiResponses(
         value =
-        [
-            ApiResponse(code = 200, message = "OK"),
-            ApiResponse(code = 404, message = "Página não encontrada")
-        ]
+            [
+                ApiResponse(code = 200, message = "OK"),
+                ApiResponse(code = 404, message = "Página não encontrada")
+            ]
     )
     @ResponseStatus(HttpStatus.OK)
     fun findAll(
@@ -121,16 +135,16 @@ class CustomerEndpoint(
     @PostMapping("/{customerId}/favorites")
     @ApiResponses(
         value =
-        [
-            ApiResponse(code = 201, message = "OK"),
-            ApiResponse(code = 404, message = "Cliente não encontrado"),
-            ApiResponse(code = 404, message = "Produto não encontrado"),
-            ApiResponse(code = 409, message = "Produto já adicionado como favorito")
-        ]
+            [
+                ApiResponse(code = 201, message = "OK"),
+                ApiResponse(code = 404, message = "Cliente não encontrado"),
+                ApiResponse(code = 404, message = "Produto não encontrado"),
+                ApiResponse(code = 409, message = "Produto já adicionado como favorito")
+            ]
     )
     @ResponseStatus(HttpStatus.CREATED)
     fun addFavorite(@PathVariable customerId: UUID, @RequestBody(required = true) request: CustomerFavoriteRequest): FavoriteResponse {
-        val favorite = this.customerAddFavoriteInteractor.execute(customerId = customerId,customerFavoriteRequest = request)
+        val favorite = this.customerAddFavoriteInteractor.execute(customerId = customerId, customerFavoriteRequest = request)
 
         return favorite.toFavoriteResponse(listOf(favorite.product))
     }
@@ -139,16 +153,16 @@ class CustomerEndpoint(
     @GetMapping("/{customerId}/favorites")
     @ApiResponses(
         value =
-        [
-            ApiResponse(code = 200, message = "OK"),
-            ApiResponse(code = 404, message = "Favorito não encontrado")
-        ]
+            [
+                ApiResponse(code = 200, message = "OK"),
+                ApiResponse(code = 404, message = "Favorito não encontrado")
+            ]
     )
     @ResponseStatus(HttpStatus.OK)
     fun findFavorites(@PathVariable customerId: UUID): FavoriteResponse {
         val favorites = this.customerFindFavoritesInteractor
             .execute(customerId)
-            
+
         return favorites.first().toFavoriteResponse(favorites.map { it.product })
     }
 
@@ -156,15 +170,15 @@ class CustomerEndpoint(
     @DeleteMapping("/{customerId}/favorites")
     @ApiResponses(
         value =
-        [
-            ApiResponse(code = 200, message = "OK"),
-            ApiResponse(code = 404, message = "Cliente não encontrado"),
-            ApiResponse(code = 404, message = "Favorito não encontrado")
-        ]
+            [
+                ApiResponse(code = 200, message = "OK"),
+                ApiResponse(code = 404, message = "Cliente não encontrado"),
+                ApiResponse(code = 404, message = "Favorito não encontrado")
+            ]
     )
     @ResponseStatus(HttpStatus.OK)
     fun removeFavorite(@PathVariable customerId: UUID, @RequestBody(required = true) request: CustomerFavoriteRequest): FavoriteResponse {
-        val favorite = this.customerRemoveFavoriteInteractor.execute(customerId = customerId,customerFavoriteRequest = request)
+        val favorite = this.customerRemoveFavoriteInteractor.execute(customerId = customerId, customerFavoriteRequest = request)
 
         return favorite.toFavoriteResponse(listOf(favorite.product))
     }

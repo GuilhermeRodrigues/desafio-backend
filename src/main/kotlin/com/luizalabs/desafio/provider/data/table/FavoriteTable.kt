@@ -1,6 +1,6 @@
 package com.luizalabs.desafio.provider.data.table
 
-import com.luizalabs.desafio.provider.api.challenge.response.Product
+import com.luizalabs.desafio.provider.api.product.response.Product
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType
 import org.hibernate.annotations.Type
 import org.hibernate.annotations.TypeDef
@@ -23,23 +23,23 @@ import javax.persistence.Table
     typeClass = JsonBinaryType::class
 )
 data class FavoriteTable(
-        @Id
-        @Column(nullable = false)
-        val id: UUID = UUID.randomUUID(),
+    @Id
+    @Column(nullable = false)
+    val id: UUID = UUID.randomUUID(),
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "favorites_list_id", nullable = false)
-        val favoritesList: FavoritesListTable,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "favorites_list_id", nullable = false)
+    val favoritesList: FavoritesListTable,
 
-        @Type(type = "jsonb")
-        @Column(nullable = false, name = "product", columnDefinition = "jsonb")
-        val product: Product,
+    @Type(type = "jsonb")
+    @Column(nullable = false, name = "product", columnDefinition = "jsonb")
+    val product: Product,
 
-        @Column(name = "created_at", nullable = false, updatable = false)
-        @CreatedDate
-        val createdAt: LocalDateTime = LocalDateTime.now(),
+    @Column(name = "created_at", nullable = false, updatable = false)
+    @CreatedDate
+    val createdAt: LocalDateTime = LocalDateTime.now(),
 
-        @Column(name = "deleted_at", nullable = true)
-        @LastModifiedDate
-        var deletedAt: LocalDateTime? = null
+    @Column(name = "deleted_at", nullable = true)
+    @LastModifiedDate
+    var deletedAt: LocalDateTime? = null
 )

@@ -9,5 +9,5 @@ import org.springframework.boot.runApplication
 class DesafioApplication
 
 fun main(args: Array<String>) {
-	runApplication<DesafioApplication>(*args)
+    runApplication<DesafioApplication>(*args)
 }

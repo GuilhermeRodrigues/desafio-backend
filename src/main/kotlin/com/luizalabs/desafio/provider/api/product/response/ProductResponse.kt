@@ -1,4 +1,4 @@
-package com.luizalabs.desafio.provider.api.challenge.response
+package com.luizalabs.desafio.provider.api.product.response
 
 import java.math.BigDecimal
 import java.util.UUID

@@ -1,6 +1,6 @@
 package com.luizalabs.desafio.entrypoint.api.response
 
-import com.luizalabs.desafio.provider.api.challenge.response.Product
+import com.luizalabs.desafio.provider.api.product.response.Product
 import io.swagger.annotations.ApiModelProperty
 import java.util.UUID
 

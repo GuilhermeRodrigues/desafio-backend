@@ -13,30 +13,30 @@ import javax.persistence.Table
 @Entity
 @Table(name = "customer")
 data class CustomerTable(
-        @Id
-        @Column(nullable = false)
-        val id: UUID = UUID.randomUUID(),
+    @Id
+    @Column(nullable = false)
+    val id: UUID = UUID.randomUUID(),
 
-        @Column(nullable = false)
-        val name: String,
+    @Column(nullable = false)
+    val name: String,
 
-        @Column(nullable = false)
-        val email: String,
+    @Column(nullable = false)
+    val email: String,
 
-        @Column(name = "created_at", nullable = false, updatable = false)
-        @CreatedDate
-        val createdAt: LocalDateTime = LocalDateTime.now(),
+    @Column(name = "created_at", nullable = false, updatable = false)
+    @CreatedDate
+    val createdAt: LocalDateTime = LocalDateTime.now(),
 
-        @Column(name = "updated_at", nullable = true)
-        @LastModifiedDate
-        var updatedAt: LocalDateTime? = null,
+    @Column(name = "updated_at", nullable = true)
+    @LastModifiedDate
+    var updatedAt: LocalDateTime? = null,
 
-        @Column(name = "deleted_at", nullable = true)
-        @LastModifiedDate
-        var deletedAt: LocalDateTime? = null
+    @Column(name = "deleted_at", nullable = true)
+    @LastModifiedDate
+    var deletedAt: LocalDateTime? = null
 ) {
-        @PreUpdate
-        fun setLastUpdate() {
-                this.updatedAt = LocalDateTime.now()
-        }
+    @PreUpdate
+    fun setLastUpdate() {
+        this.updatedAt = LocalDateTime.now()
+    }
 }

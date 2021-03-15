@@ -12,11 +12,11 @@ import javax.persistence.Table
 @Entity
 @Table(name = "favorites_list")
 data class FavoritesListTable(
-        @Id
-        @Column(nullable = false)
-        val id: UUID = UUID.randomUUID(),
+    @Id
+    @Column(nullable = false)
+    val id: UUID = UUID.randomUUID(),
 
-        @OneToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "customer_id", nullable = false)
-        val customer: CustomerTable
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false)
+    val customer: CustomerTable
 )

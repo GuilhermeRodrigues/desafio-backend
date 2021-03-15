@@ -3,8 +3,8 @@ package com.luizalabs.desafio.entrypoint.api
 import com.luizalabs.desafio.annotation.Endpoint
 import com.luizalabs.desafio.core.interactor.ProductFindAllInteractor
 import com.luizalabs.desafio.core.interactor.ProductFindByIdInteractor
-import com.luizalabs.desafio.provider.api.challenge.response.Product
-import com.luizalabs.desafio.provider.api.challenge.response.ProductResponse
+import com.luizalabs.desafio.provider.api.product.response.Product
+import com.luizalabs.desafio.provider.api.product.response.ProductResponse
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiResponse

@@ -1,6 +1,6 @@
 package com.luizalabs.desafio.core.domain
 
-import com.luizalabs.desafio.provider.api.challenge.response.Product
+import com.luizalabs.desafio.provider.api.product.response.Product
 import java.time.LocalDateTime
 import java.util.UUID
 

@@ -7,4 +7,3 @@ import org.springframework.stereotype.Component
 @MustBeDocumented
 @Component
 annotation class ApiProvider
-

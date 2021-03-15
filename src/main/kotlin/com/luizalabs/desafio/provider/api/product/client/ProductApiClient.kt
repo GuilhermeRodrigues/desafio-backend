@@ -1,4 +1,4 @@
-package com.luizalabs.desafio.provider.api.challenge.client
+package com.luizalabs.desafio.provider.api.product.client
 
 import com.luizalabs.desafio.annotation.ApiClient
 import com.luizalabs.desafio.config.http.HttpClient

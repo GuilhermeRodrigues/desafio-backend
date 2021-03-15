@@ -4,7 +4,12 @@ import com.luizalabs.desafio.annotation.UseCase
 import com.luizalabs.desafio.core.domain.Favorite
 import com.luizalabs.desafio.core.domain.FavoritesList
 import com.luizalabs.desafio.core.exception.FavoriteAlreadyAddedException
-import com.luizalabs.desafio.core.gateway.*
+import com.luizalabs.desafio.core.gateway.CustomerFindByIdGateway
+import com.luizalabs.desafio.core.gateway.FavoriteFindByFavoritesListIdAndDeletedAtIsNullGateway
+import com.luizalabs.desafio.core.gateway.FavoriteSaveGateway
+import com.luizalabs.desafio.core.gateway.FavoritesListFindByCustomerIdGateway
+import com.luizalabs.desafio.core.gateway.FavoritesListSaveGateway
+import com.luizalabs.desafio.core.gateway.ProductFindByIdGateway
 import com.luizalabs.desafio.core.interactor.CustomerAddFavoriteInteractor
 import com.luizalabs.desafio.entrypoint.api.request.CustomerFavoriteRequest
 import java.util.UUID

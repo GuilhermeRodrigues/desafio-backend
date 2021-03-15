@@ -1,14 +1,14 @@
-package com.luizalabs.desafio.provider.api.challenge
+package com.luizalabs.desafio.provider.api.product
 
 import com.luizalabs.desafio.annotation.ApiProvider
 import com.luizalabs.desafio.config.http.HttpClient
 import com.luizalabs.desafio.config.http.getBody
 import com.luizalabs.desafio.core.gateway.ProductFindAllGateway
 import com.luizalabs.desafio.core.gateway.ProductFindByIdGateway
-import com.luizalabs.desafio.provider.api.challenge.exception.ProductInternalServerErrorException
-import com.luizalabs.desafio.provider.api.challenge.exception.ProductNotFoundException
-import com.luizalabs.desafio.provider.api.challenge.response.Product
-import com.luizalabs.desafio.provider.api.challenge.response.ProductResponse
+import com.luizalabs.desafio.provider.api.product.exception.ProductInternalServerErrorException
+import com.luizalabs.desafio.provider.api.product.exception.ProductNotFoundException
+import com.luizalabs.desafio.provider.api.product.response.Product
+import com.luizalabs.desafio.provider.api.product.response.ProductResponse
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpStatus
 import java.util.UUID

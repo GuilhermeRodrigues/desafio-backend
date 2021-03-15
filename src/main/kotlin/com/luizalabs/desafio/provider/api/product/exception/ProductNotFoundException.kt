@@ -1,4 +1,4 @@
-package com.luizalabs.desafio.provider.api.challenge.exception
+package com.luizalabs.desafio.provider.api.product.exception
 
 import com.luizalabs.desafio.core.exception.impl.NotFoundException
 
