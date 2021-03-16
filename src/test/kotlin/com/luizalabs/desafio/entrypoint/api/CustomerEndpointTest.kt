@@ -26,6 +26,7 @@ import org.mockito.Mockito
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
+import java.time.LocalDateTime
 import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -73,11 +74,17 @@ internal class CustomerEndpointTest {
         val result = this.customerEndpoint.create(request)
 
         assertEquals(this.customerId, result.id)
+        assertNotNull(result.name)
+        assertNotNull(result.email)
+        assertNotNull(result.createdAt)
     }
 
     @Test
     fun `customer endpoint (put)`() {
-        val customer = Customer::class.createMockInstance().copy(id = this.customerId)
+        val customer = Customer::class.createMockInstance().copy(
+            id = this.customerId,
+            updatedAt = LocalDateTime.now()
+        )
         val request = CustomerUpdateRequest::class.createMockInstance()
             .copy(
                 name = "João da Silva"
@@ -93,11 +100,15 @@ internal class CustomerEndpointTest {
         val result = this.customerEndpoint.update(this.customerId, request)
 
         assertEquals("João da Silva", result.name)
+        assertNotNull(result.updatedAt)
     }
 
     @Test
     fun `customer endpoint (delete)`() {
-        val customer = Customer::class.createMockInstance().copy(id = this.customerId)
+        val customer = Customer::class.createMockInstance().copy(
+            id = this.customerId,
+            deletedAt = LocalDateTime.now()
+        )
 
         Mockito.`when`(this.customerDeleteInteractor.execute(this.customerId))
             .thenReturn(customer)
@@ -105,6 +116,7 @@ internal class CustomerEndpointTest {
         val result = this.customerEndpoint.delete(this.customerId)
 
         assertEquals(customer.id, result.id)
+        assertNotNull(result.deletedAt)
     }
 
     @Test

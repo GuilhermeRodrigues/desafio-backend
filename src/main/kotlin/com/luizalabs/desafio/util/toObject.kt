@@ -9,4 +9,3 @@ private fun <T> readValue(value: String, clazz: Class<T>): T {
 }
 
 fun <T : Any> String.toObject(clazz: KClass<T>): T = readValue(this, clazz.java)
-fun <T : Any> String.toObject(clazz: Class<T>): T = readValue(this, clazz)
