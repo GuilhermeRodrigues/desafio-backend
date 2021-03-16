@@ -3,6 +3,9 @@ application:
     product:
       url: ${APPLICATION_CLIENT_PRODUCT_URL:http://challenge-api.luizalabs.com/api}
       timeout: ${APPLICATION_CLIENT_PRODUCT_TIMEOUT:10000}
+  security:
+    jwt-enabled: ${JWT_ENABLED:true}
+    jwt-secret-key: ${JWT_SECRET_KEY:1234567890-desafio1234567890-1234567890}
 
 spring:
   datasource:
