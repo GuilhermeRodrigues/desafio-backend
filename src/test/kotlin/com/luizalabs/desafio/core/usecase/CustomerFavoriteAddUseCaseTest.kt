@@ -1,0 +1,227 @@
+package com.luizalabs.desafio.core.usecase
+
+import com.luizalabs.desafio.annotation.UnitTest
+import com.luizalabs.desafio.core.domain.Customer
+import com.luizalabs.desafio.core.domain.Favorite
+import com.luizalabs.desafio.core.domain.FavoritesList
+import com.luizalabs.desafio.core.exception.CustomerNotFoundException
+import com.luizalabs.desafio.core.exception.FavoriteAlreadyAddedException
+import com.luizalabs.desafio.core.gateway.CustomerFindByIdGateway
+import com.luizalabs.desafio.core.gateway.FavoriteFindByFavoritesListIdAndDeletedAtIsNullGateway
+import com.luizalabs.desafio.core.gateway.FavoriteSaveGateway
+import com.luizalabs.desafio.core.gateway.FavoritesListFindByCustomerIdGateway
+import com.luizalabs.desafio.core.gateway.FavoritesListSaveGateway
+import com.luizalabs.desafio.core.gateway.ProductFindByIdGateway
+import com.luizalabs.desafio.entrypoint.api.request.CustomerFavoriteRequest
+import com.luizalabs.desafio.provider.api.product.exception.ProductNotFoundException
+import com.luizalabs.desafio.provider.api.product.response.Product
+import com.luizalabs.desafio.util.anyObject
+import com.luizalabs.desafio.util.createMockInstance
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import org.mockito.InjectMocks
+import org.mockito.Mock
+import org.mockito.Mockito
+import java.util.UUID
+import kotlin.test.assertEquals
+
+@UnitTest
+internal class CustomerFavoriteAddUseCaseTest {
+    @Mock
+    private lateinit var customerFindByIdGateway: CustomerFindByIdGateway
+
+    @Mock
+    private lateinit var favoritesListFindByCustomerIdGateway: FavoritesListFindByCustomerIdGateway
+
+    @Mock
+    private lateinit var favoritesListSaveGateway: FavoritesListSaveGateway
+
+    @Mock
+    private lateinit var favoriteFindByFavoritesListIdAndDeletedAtIsNullGateway: FavoriteFindByFavoritesListIdAndDeletedAtIsNullGateway
+
+    @Mock
+    private lateinit var favoriteSaveGateway: FavoriteSaveGateway
+
+    @Mock
+    private lateinit var productFindByIdGateway: ProductFindByIdGateway
+
+    @InjectMocks
+    private lateinit var customerFavoriteAddUseCase: CustomerFavoriteAddUseCase
+
+    private val customerId = UUID.fromString("3c1980ab-ab8a-4bd8-af2b-e47874380209")
+    private val favoritesListId = UUID.fromString("fc6ac9ee-85bb-4591-9360-ccc5f606a926")
+    private val productId = UUID.fromString("0a3390b2-5fbb-4413-8e64-c1f60bfe0b4e")
+
+    private val customer = Customer::class.createMockInstance().copy(
+        id = this.customerId
+    )
+
+    private val favoritesList = FavoritesList::class.createMockInstance().copy(
+        id = this.favoritesListId,
+        customer = customer
+    )
+
+    private val product = Product::class.createMockInstance().copy(
+        id = this.productId
+    )
+
+    private val favorite = Favorite::class.createMockInstance().copy(
+        favoritesList = favoritesList,
+        product = product
+    )
+
+    private fun verifyAllMethodsCalled() {
+        Mockito
+            .verify(this.customerFindByIdGateway, Mockito.times(1))
+            .findById(id = this.customerId)
+
+        Mockito
+            .verify(this.favoritesListFindByCustomerIdGateway, Mockito.times(1))
+            .findByCustomerId(customerId = this.customerId)
+
+        Mockito
+            .verify(this.favoritesListSaveGateway, Mockito.times(1))
+            .save(favoritesList = anyObject())
+
+        Mockito
+            .verify(this.favoriteFindByFavoritesListIdAndDeletedAtIsNullGateway, Mockito.times(1))
+            .findByFavoritesListIdAndDeletedAtIsNull(favoritesListId = this.favoritesListId)
+
+        Mockito
+            .verify(this.favoriteSaveGateway, Mockito.times(1))
+            .save(favorite = anyObject())
+
+        Mockito
+            .verify(this.productFindByIdGateway, Mockito.times(1))
+            .findById(id = this.productId)
+    }
+
+    @Test
+    fun `Adicionar o favorito do cliente com sucesso`() {
+        val customerFavoriteRequest = CustomerFavoriteRequest::class.createMockInstance().copy(
+            productId = favorite.product.id
+        )
+
+        Mockito
+            .`when`(this.customerFindByIdGateway.findById(id = this.customerId))
+            .thenReturn(customer)
+
+        Mockito
+            .`when`(
+                this.favoritesListFindByCustomerIdGateway
+                    .findByCustomerId(customerId = customer.id)
+            )
+            .thenReturn(null)
+
+        Mockito
+            .`when`(this.favoritesListSaveGateway.save(anyObject(FavoritesList::class.java)))
+            .thenReturn(favoritesList)
+
+        Mockito
+            .`when`(
+                this.favoriteFindByFavoritesListIdAndDeletedAtIsNullGateway
+                    .findByFavoritesListIdAndDeletedAtIsNull(favoritesListId = favoritesList.id)
+            )
+            .thenReturn(listOf())
+
+        Mockito
+            .`when`(
+                this.productFindByIdGateway
+                    .findById(id = favorite.product.id)
+            )
+            .thenReturn(favorite.product)
+
+        Mockito
+            .`when`(this.favoriteSaveGateway.save(anyObject(Favorite::class.java)))
+            .thenReturn(favorite)
+
+        val result = this.customerFavoriteAddUseCase.execute(this.customerId, customerFavoriteRequest)
+
+        this.verifyAllMethodsCalled()
+        assertEquals(result.id, favorite.id)
+    }
+
+    @Test
+    fun `Adicionar o favorito do cliente com erro de cliente não encontrado`() {
+        val customerFavoriteRequest = CustomerFavoriteRequest::class.createMockInstance()
+
+        Mockito
+            .`when`(this.customerFindByIdGateway.findById(id = this.customerId))
+            .thenThrow(CustomerNotFoundException())
+
+        assertThrows<CustomerNotFoundException> {
+            this.customerFavoriteAddUseCase.execute(this.customerId, customerFavoriteRequest)
+        }
+    }
+
+    @Test
+    fun `Adicionar o favorito do cliente com erro de favorito já adicionado`() {
+        val customerFavoriteRequest = CustomerFavoriteRequest(productId = this.productId)
+
+        Mockito
+            .`when`(this.customerFindByIdGateway.findById(id = this.customerId))
+            .thenReturn(customer)
+
+        Mockito
+            .`when`(
+                this.favoritesListFindByCustomerIdGateway
+                    .findByCustomerId(customerId = customer.id)
+            )
+            .thenReturn(null)
+
+        Mockito
+            .`when`(this.favoritesListSaveGateway.save(anyObject(FavoritesList::class.java)))
+            .thenReturn(favoritesList)
+
+        Mockito
+            .`when`(
+                this.favoriteFindByFavoritesListIdAndDeletedAtIsNullGateway
+                    .findByFavoritesListIdAndDeletedAtIsNull(favoritesListId = favoritesList.id)
+            )
+            .thenReturn(listOf(favorite))
+
+        assertThrows<FavoriteAlreadyAddedException> {
+            this.customerFavoriteAddUseCase.execute(this.customerId, customerFavoriteRequest)
+        }
+    }
+
+    @Test
+    fun `Adicionar o favorito do cliente com erro de produto não encontrado`() {
+        val customerFavoriteRequest = CustomerFavoriteRequest::class.createMockInstance().copy(
+            productId = favorite.product.id
+        )
+
+        Mockito
+            .`when`(this.customerFindByIdGateway.findById(id = this.customerId))
+            .thenReturn(customer)
+
+        Mockito
+            .`when`(
+                this.favoritesListFindByCustomerIdGateway
+                    .findByCustomerId(customerId = customer.id)
+            )
+            .thenReturn(null)
+
+        Mockito
+            .`when`(this.favoritesListSaveGateway.save(anyObject(FavoritesList::class.java)))
+            .thenReturn(favoritesList)
+
+        Mockito
+            .`when`(
+                this.favoriteFindByFavoritesListIdAndDeletedAtIsNullGateway
+                    .findByFavoritesListIdAndDeletedAtIsNull(favoritesListId = favoritesList.id)
+            )
+            .thenReturn(listOf())
+
+        Mockito
+            .`when`(
+                this.productFindByIdGateway
+                    .findById(id = favorite.product.id)
+            )
+            .thenThrow(ProductNotFoundException())
+
+        assertThrows<ProductNotFoundException> {
+            this.customerFavoriteAddUseCase.execute(this.customerId, customerFavoriteRequest)
+        }
+    }
+}

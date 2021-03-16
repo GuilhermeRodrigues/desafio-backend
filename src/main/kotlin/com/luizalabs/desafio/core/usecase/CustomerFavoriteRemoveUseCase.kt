@@ -13,7 +13,7 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 @UseCase
-internal class CustomerRemoveFavoriteUseCase(
+internal class CustomerFavoriteRemoveUseCase(
     private val customerFindByIdGateway: CustomerFindByIdGateway,
     private val favoritesListFindByCustomerIdGateway: FavoritesListFindByCustomerIdGateway,
     private val favoriteFindByFavoritesListIdAndDeletedAtIsNullGateway: FavoriteFindByFavoritesListIdAndDeletedAtIsNullGateway,

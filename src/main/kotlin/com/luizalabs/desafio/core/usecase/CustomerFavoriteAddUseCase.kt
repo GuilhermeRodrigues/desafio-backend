@@ -15,7 +15,7 @@ import com.luizalabs.desafio.entrypoint.api.request.CustomerFavoriteRequest
 import java.util.UUID
 
 @UseCase
-internal class CustomerAddFavoriteUseCase(
+internal class CustomerFavoriteAddUseCase(
     private val customerFindByIdGateway: CustomerFindByIdGateway,
     private val favoritesListFindByCustomerIdGateway: FavoritesListFindByCustomerIdGateway,
     private val favoritesListSaveGateway: FavoritesListSaveGateway,
