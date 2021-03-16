@@ -3,8 +3,8 @@ package com.luizalabs.desafio.mapper
 import com.luizalabs.desafio.core.domain.Favorite
 import com.luizalabs.desafio.provider.api.product.response.Product
 import com.luizalabs.desafio.provider.data.table.FavoriteTable
-import com.luizalabs.desafio.util.createMockInstance
-import com.luizalabs.desafio.util.createMockInstances
+import com.luizalabs.desafio.util.test.createMockInstance
+import com.luizalabs.desafio.util.test.createMockInstances
 import org.junit.jupiter.api.Test
 import kotlin.test.assertNotNull
 

@@ -7,9 +7,9 @@ import com.luizalabs.desafio.core.exception.PageNotFoundException
 import com.luizalabs.desafio.mapper.toTable
 import com.luizalabs.desafio.provider.data.repository.CustomerRepository
 import com.luizalabs.desafio.provider.data.table.CustomerTable
-import com.luizalabs.desafio.util.anyObject
-import com.luizalabs.desafio.util.createMockInstance
-import com.luizalabs.desafio.util.createMockInstances
+import com.luizalabs.desafio.util.test.anyObject
+import com.luizalabs.desafio.util.test.createMockInstance
+import com.luizalabs.desafio.util.test.createMockInstances
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.InjectMocks

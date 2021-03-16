@@ -9,7 +9,7 @@ import com.luizalabs.desafio.core.exception.FavoriteNotFoundException
 import com.luizalabs.desafio.core.gateway.CustomerFindByIdGateway
 import com.luizalabs.desafio.core.gateway.FavoriteFindByFavoritesListIdAndDeletedAtIsNullGateway
 import com.luizalabs.desafio.core.gateway.FavoritesListFindByCustomerIdGateway
-import com.luizalabs.desafio.util.createMockInstance
+import com.luizalabs.desafio.util.test.createMockInstance
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.InjectMocks

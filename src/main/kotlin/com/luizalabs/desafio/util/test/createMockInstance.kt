@@ -1,4 +1,4 @@
-package com.luizalabs.desafio.util
+package com.luizalabs.desafio.util.test
 
 import com.tyro.oss.arbitrater.arbitrater
 import kotlin.random.Random

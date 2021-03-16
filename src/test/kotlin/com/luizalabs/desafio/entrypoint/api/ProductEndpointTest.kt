@@ -5,7 +5,7 @@ import com.luizalabs.desafio.core.interactor.ProductFindAllInteractor
 import com.luizalabs.desafio.core.interactor.ProductFindByIdInteractor
 import com.luizalabs.desafio.provider.api.product.response.Product
 import com.luizalabs.desafio.provider.api.product.response.ProductResponse
-import com.luizalabs.desafio.util.createMockInstance
+import com.luizalabs.desafio.util.test.createMockInstance
 import org.junit.jupiter.api.Test
 import org.mockito.InjectMocks
 import org.mockito.Mock

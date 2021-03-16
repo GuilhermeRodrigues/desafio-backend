@@ -1,5 +1,7 @@
-package com.luizalabs.desafio.util
+package com.luizalabs.desafio.util.test
 
+import com.luizalabs.desafio.util.toJSON
+import com.luizalabs.desafio.util.toObject
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import kotlin.reflect.KClass

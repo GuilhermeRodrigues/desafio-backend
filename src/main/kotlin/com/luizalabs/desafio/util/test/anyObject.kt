@@ -1,4 +1,4 @@
-package com.luizalabs.desafio.util
+package com.luizalabs.desafio.util.test
 
 import org.mockito.Mockito
 

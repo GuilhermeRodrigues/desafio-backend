@@ -8,8 +8,8 @@ import com.luizalabs.desafio.core.gateway.CustomerFindByEmailGateway
 import com.luizalabs.desafio.core.gateway.CustomerFindByIdGateway
 import com.luizalabs.desafio.core.gateway.CustomerSaveGateway
 import com.luizalabs.desafio.entrypoint.api.request.CustomerUpdateRequest
-import com.luizalabs.desafio.util.anyObject
-import com.luizalabs.desafio.util.createMockInstance
+import com.luizalabs.desafio.util.test.anyObject
+import com.luizalabs.desafio.util.test.createMockInstance
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.InjectMocks

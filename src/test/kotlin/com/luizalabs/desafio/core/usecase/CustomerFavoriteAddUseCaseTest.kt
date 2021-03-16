@@ -15,8 +15,8 @@ import com.luizalabs.desafio.core.gateway.ProductFindByIdGateway
 import com.luizalabs.desafio.entrypoint.api.request.CustomerFavoriteRequest
 import com.luizalabs.desafio.provider.api.product.exception.ProductNotFoundException
 import com.luizalabs.desafio.provider.api.product.response.Product
-import com.luizalabs.desafio.util.anyObject
-import com.luizalabs.desafio.util.createMockInstance
+import com.luizalabs.desafio.util.test.anyObject
+import com.luizalabs.desafio.util.test.createMockInstance
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.InjectMocks

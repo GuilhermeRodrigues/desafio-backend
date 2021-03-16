@@ -1,7 +1,7 @@
 package com.luizalabs.desafio.core.domain
 
-import com.luizalabs.desafio.util.createMockInstance
-import com.luizalabs.desafio.util.testDataClassesByPackage
+import com.luizalabs.desafio.util.test.createMockInstance
+import com.luizalabs.desafio.util.test.testDataClassesByPackage
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import kotlin.test.assertNotNull

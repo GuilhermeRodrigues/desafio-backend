@@ -1,7 +1,7 @@
 package com.luizalabs.desafio.provider.data.table
 
-import com.luizalabs.desafio.util.assertSerializable
-import com.luizalabs.desafio.util.createMockInstance
+import com.luizalabs.desafio.util.test.assertSerializable
+import com.luizalabs.desafio.util.test.createMockInstance
 import org.junit.jupiter.api.Test
 import kotlin.test.assertNotNull
 

@@ -1,6 +1,6 @@
 package com.luizalabs.desafio.provider.api.product.response
 
-import com.luizalabs.desafio.util.testDataClassesByPackage
+import com.luizalabs.desafio.util.test.testDataClassesByPackage
 import org.junit.jupiter.api.Test
 
 internal class ApiResponseTest {

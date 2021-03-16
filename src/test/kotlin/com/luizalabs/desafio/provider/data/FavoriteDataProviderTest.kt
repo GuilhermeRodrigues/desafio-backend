@@ -5,8 +5,8 @@ import com.luizalabs.desafio.core.domain.Favorite
 import com.luizalabs.desafio.mapper.toTable
 import com.luizalabs.desafio.provider.data.repository.FavoriteRepository
 import com.luizalabs.desafio.provider.data.table.FavoriteTable
-import com.luizalabs.desafio.util.anyObject
-import com.luizalabs.desafio.util.createMockInstance
+import com.luizalabs.desafio.util.test.anyObject
+import com.luizalabs.desafio.util.test.createMockInstance
 import org.junit.jupiter.api.Test
 import org.mockito.InjectMocks
 import org.mockito.Mock

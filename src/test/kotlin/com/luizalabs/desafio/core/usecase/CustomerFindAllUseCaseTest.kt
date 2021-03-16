@@ -4,7 +4,7 @@ import com.luizalabs.desafio.annotation.UnitTest
 import com.luizalabs.desafio.core.domain.Customer
 import com.luizalabs.desafio.core.exception.PageNotFoundException
 import com.luizalabs.desafio.core.gateway.CustomerFindAllGateway
-import com.luizalabs.desafio.util.createMockInstances
+import com.luizalabs.desafio.util.test.createMockInstances
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.InjectMocks

@@ -4,7 +4,7 @@ import com.luizalabs.desafio.annotation.UnitTest
 import com.luizalabs.desafio.core.gateway.ProductFindByIdGateway
 import com.luizalabs.desafio.provider.api.product.exception.ProductNotFoundException
 import com.luizalabs.desafio.provider.api.product.response.Product
-import com.luizalabs.desafio.util.createMockInstance
+import com.luizalabs.desafio.util.test.createMockInstance
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.InjectMocks
