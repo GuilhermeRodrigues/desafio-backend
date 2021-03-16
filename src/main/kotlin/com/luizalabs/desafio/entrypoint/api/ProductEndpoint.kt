@@ -40,7 +40,7 @@ class ProductEndpoint(
             .execute(page ?: 0)
     }
 
-    @ApiOperation(value = "Listar os produtos")
+    @ApiOperation(value = "Buscar produto pelo id")
     @ApiResponses(
         value = [
             ApiResponse(code = 200, message = "Ok"),
@@ -49,7 +49,7 @@ class ProductEndpoint(
     )
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun finById(@PathVariable id: UUID): Product {
+    fun findById(@PathVariable id: UUID): Product {
         return this
             .productFindByIdInteractor
             .execute(id)
