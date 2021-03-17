@@ -25,7 +25,7 @@ http://localhost:8080/swagger-ui/
 | SPRING_DATASOURCE_HOST |  postgres database host | `localhost` |
 | SPRING_DATASOURCE_PORT |  postgres database port | `5432` |
 | SPRING_DATASOURCE_DBNAME |  postgres database name | `desafio` |
-| SPRING_DATASOURCE_USERNAME |  postgres database name | `desafio` |
+| SPRING_DATASOURCE_USERNAME |  postgres database username | `desafio` |
 | SPRING_DATASOURCE_PASSWORD |  postgres database password | `desafio` |
 | SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE |  max pool size | `10` |
 | SPRING_FLYWAY_ENABLED |  flyway enabled | `true` |
@@ -34,6 +34,11 @@ http://localhost:8080/swagger-ui/
 
 ```sh
 mvn spring-boot:run
+
+Antes de iniciar a aplicação, execute o comando para subir o banco de dados:
+docker-compose up -d
+Se precisar baixar o banco, execute o comando abaixo:
+docker-compose down
 ```
 
 ## Testes

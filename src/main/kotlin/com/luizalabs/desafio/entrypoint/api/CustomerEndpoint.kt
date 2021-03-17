@@ -50,7 +50,7 @@ class CustomerEndpoint(
     private val customerFindFavoritesInteractor: CustomerFindFavoritesInteractor,
     private val customerRemoveFavoriteInteractor: CustomerRemoveFavoriteInteractor
 ) {
-    @ApiOperation(value = "Criar um cliente")
+    @ApiOperation(value = "Cadastrar um cliente")
     @PostMapping
     @ApiResponses(
         value =
@@ -79,7 +79,7 @@ class CustomerEndpoint(
         return this.customerUpdateInteractor.execute(id = id, customerUpdateRequest = request).toCustomerResponse()
     }
 
-    @ApiOperation(value = "Apagar um cliente")
+    @ApiOperation(value = "Excluir um cliente")
     @DeleteMapping("/{id}")
     @ApiResponses(
         value =
@@ -93,7 +93,7 @@ class CustomerEndpoint(
         return this.customerDeleteInteractor.execute(id = id).toCustomerResponse()
     }
 
-    @ApiOperation(value = "Consultar um cliente pelo id")
+    @ApiOperation(value = "Buscar cliente pelo id")
     @GetMapping("/{id}")
     @ApiResponses(
         value =

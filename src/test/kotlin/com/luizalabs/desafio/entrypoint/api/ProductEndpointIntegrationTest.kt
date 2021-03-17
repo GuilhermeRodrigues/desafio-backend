@@ -23,7 +23,7 @@ internal class ProductEndpointIntegrationTest : EndpointTest() {
     private lateinit var productFindByIdInteractor: ProductFindByIdInteractor
 
     @Test
-    fun `product endpoint (get) - find all`() {
+    fun `product endpoint (get) - listar produtos`() {
         val productResponse = ProductResponse::class.createMockInstance()
 
         Mockito
@@ -49,7 +49,7 @@ internal class ProductEndpointIntegrationTest : EndpointTest() {
     }
 
     @Test
-    fun `product endpoint (get) - find by id`() {
+    fun `product endpoint (get) - buscar produto pelo id`() {
         val id = UUID.fromString("7edc246c-e8cb-48f6-8fb7-b7a333c8a23c")
 
         val product = Product::class.createMockInstance()

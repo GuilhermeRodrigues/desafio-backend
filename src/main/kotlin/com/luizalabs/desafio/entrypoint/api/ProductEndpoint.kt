@@ -26,7 +26,7 @@ class ProductEndpoint(
     @ApiResponses(
         value = [
             ApiResponse(code = 200, message = "OK"),
-            ApiResponse(code = 500, message = "Não foi possível obter o produto")
+            ApiResponse(code = 404, message = "Página não encontrada")
         ]
     )
     @GetMapping
