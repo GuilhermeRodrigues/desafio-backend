@@ -171,6 +171,8 @@
 					<excludes>
 						<exclude>**/config/advice/**</exclude>
 						<exclude>**/config/http/**</exclude>
+						<exclude>**/config/security/**</exclude>
+						<exclude>**/config/swagger/**</exclude>
 					</excludes>
 				</configuration>
 				<executions>
