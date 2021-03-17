@@ -30,12 +30,12 @@ http://localhost:8080/swagger-ui/
 | SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE |  max pool size | `10` |
 | SPRING_FLYWAY_ENABLED |  flyway enabled | `true` |
 
-## Inicialização
+## Execução
 
 ```sh
 mvn spring-boot:run
 
-Antes de iniciar a aplicação, execute o comando para subir o banco de dados:
+Antes de executar a aplicação, execute o comando para subir o banco de dados:
 docker-compose up -d
 Se precisar baixar o banco, execute o comando abaixo:
 docker-compose down

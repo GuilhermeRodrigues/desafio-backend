@@ -43,7 +43,7 @@ internal class ProductFindAllUseCaseTest {
     }
 
     @Test
-    fun `Listar os produtos com erro interno`() {
+    fun `Listar os produtos com erro`() {
         Mockito
             .`when`(this.productFindAllGateway.findAll(page = this.page))
             .thenThrow(PageNotFoundException())

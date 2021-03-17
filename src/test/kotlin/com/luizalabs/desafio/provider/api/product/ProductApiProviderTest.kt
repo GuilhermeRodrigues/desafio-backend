@@ -84,7 +84,7 @@ internal class ProductApiProviderTest {
     }
 
     @Test
-    fun `buscar produtos - erro interno`() {
+    fun `buscar produtos - erro`() {
         val page = 1
         val parameter = "?page=$page"
 
