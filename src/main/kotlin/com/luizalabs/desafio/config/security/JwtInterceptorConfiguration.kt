@@ -19,44 +19,45 @@ class JwtInterceptorConfiguration(
     private val jwtSecretKey: String,
     private val context: ApplicationContext
 ) : OncePerRequestFilter() {
-  @Throws(ServletException::class, IOException::class)
-  override fun doFilterInternal(
-      request: HttpServletRequest,
-      response: HttpServletResponse,
-      filterChain: FilterChain
-  ) {
-    var authorization: String
+    @Throws(ServletException::class, IOException::class)
+    override fun doFilterInternal(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        filterChain: FilterChain
+    ) {
+        var authorization: String
 
-    if (!this.jwtEnabled) {
-      authorization =
-          JwtUtil.getEncodedJwt(this.jwtSecretKey).replace("Bearer ", "")
-    } else {
-      authorization =
-          (request.getHeader("Authorization") ?: "").replace("Bearer ", "")
-
-      try {
-        val handlerRequest =
-            this.context.getBean(HandlerMapping::class.java).getHandler(request)
-
-        if (handlerRequest != null) {
-          val handlerMethod = (handlerRequest.handler as HandlerMethod).method
-
-          if (handlerMethod.isAnnotationPresent(ExcludeAuthentication::class.java) ||
-              handlerMethod.declaringClass.isAnnotationPresent(ExcludeAuthentication::class.java)) {
+        if (!this.jwtEnabled) {
             authorization =
                 JwtUtil.getEncodedJwt(this.jwtSecretKey).replace("Bearer ", "")
-          }
+        } else {
+            authorization =
+                (request.getHeader("Authorization") ?: "").replace("Bearer ", "")
+
+            try {
+                val handlerRequest =
+                    this.context.getBean(HandlerMapping::class.java).getHandler(request)
+
+                if (handlerRequest != null) {
+                    val handlerMethod = (handlerRequest.handler as HandlerMethod).method
+
+                    if (handlerMethod.isAnnotationPresent(ExcludeAuthentication::class.java) ||
+                        handlerMethod.declaringClass.isAnnotationPresent(ExcludeAuthentication::class.java)
+                    ) {
+                        authorization =
+                            JwtUtil.getEncodedJwt(this.jwtSecretKey).replace("Bearer ", "")
+                    }
+                }
+            } catch (t: Throwable) {
+                System.err.println("Unable to get Request Controller Method: $t")
+            }
         }
-      } catch (t: Throwable) {
-        System.err.println("Unable to get Request Controller Method: $t")
-      }
-    }
 
-    if (JwtUtil.isValidJwt(this.jwtSecretKey, authorization)) {
-      SecurityContextHolder.getContext().authentication =
-          UsernamePasswordAuthenticationToken(authorization, null, arrayListOf())
-    }
+        if (JwtUtil.isValidJwt(this.jwtSecretKey, authorization)) {
+            SecurityContextHolder.getContext().authentication =
+                UsernamePasswordAuthenticationToken(authorization, null, arrayListOf())
+        }
 
-    filterChain.doFilter(request, response)
-  }
+        filterChain.doFilter(request, response)
+    }
 }

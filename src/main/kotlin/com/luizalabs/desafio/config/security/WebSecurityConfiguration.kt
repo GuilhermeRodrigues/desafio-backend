@@ -37,46 +37,50 @@ class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
     @Throws(java.lang.Exception::class)
     override fun configure(http: HttpSecurity) {
         http
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .csrf()
-                .disable()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .addFilterBefore(
-                        JwtInterceptorConfiguration(this.jwtEnabled, this.jwtSecretKey, this.context),
-                        UsernamePasswordAuthenticationFilter::class.java
-                )
-                .exceptionHandling()
-                .authenticationEntryPoint { _: HttpServletRequest?,
-                                            response: HttpServletResponse,
-                                            _: AuthenticationException? ->
-                    response.status = HttpStatus.UNAUTHORIZED.value()
-                    response.contentType = "application/json"
-                    response.writer.write(
-                            this.mapper.writeValueAsString(
-                                    BaseExceptionResponse(
-                                            userMessage = "Unauthorized",
-                                            developerMessage = "Without permission to perform this action",
-                                            errorCode = 400001,
-                                            statusCode = HttpStatus.UNAUTHORIZED.value()
-                                    )
-                            )
+            .authorizeRequests()
+            .anyRequest()
+            .authenticated()
+            .and()
+            .csrf()
+            .disable()
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .addFilterBefore(
+                JwtInterceptorConfiguration(this.jwtEnabled, this.jwtSecretKey, this.context),
+                UsernamePasswordAuthenticationFilter::class.java
+            )
+            .exceptionHandling()
+            .authenticationEntryPoint { _: HttpServletRequest?,
+                response: HttpServletResponse,
+                _: AuthenticationException? ->
+                response.status = HttpStatus.UNAUTHORIZED.value()
+                response.contentType = "application/json"
+                response.writer.write(
+                    this.mapper.writeValueAsString(
+                        BaseExceptionResponse(
+                            userMessage = "Unauthorized",
+                            developerMessage = "Without permission to perform this action",
+                            errorCode = 400001,
+                            statusCode = HttpStatus.UNAUTHORIZED.value()
+                        )
                     )
-                }
+                )
+            }
     }
 
     @Throws(Exception::class)
     override fun configure(web: WebSecurity) {
         web.ignoring().antMatchers(
-                "/",
-                "/docs",
-                "/swagger",
-                "/swagger-ui.html",
-                "/swagger-ui/**"
+            "/",
+            "/docs",
+            "/swagger",
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+            "/v2/api-docs",
+            "/swagger-resources/**",
+            "/logger/health",
+            "/actuator/**"
         )
     }
 

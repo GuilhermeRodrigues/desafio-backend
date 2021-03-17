@@ -1,4 +1,6 @@
 application:
+  app: ${APPLICATION_APP:Desafio-Backend}
+  version: ${APPLICATION_VERSION:1.0.0}
   client:
     product:
       url: ${APPLICATION_CLIENT_PRODUCT_URL:http://challenge-api.luizalabs.com/api}
