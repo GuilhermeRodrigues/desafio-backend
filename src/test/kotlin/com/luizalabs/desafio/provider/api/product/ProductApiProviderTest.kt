@@ -3,7 +3,7 @@ package com.luizalabs.desafio.provider.api.product
 import com.luizalabs.desafio.annotation.UnitTest
 import com.luizalabs.desafio.config.http.HttpClient
 import com.luizalabs.desafio.config.http.HttpClientResponse
-import com.luizalabs.desafio.provider.api.product.exception.ProductInternalServerErrorException
+import com.luizalabs.desafio.core.exception.PageNotFoundException
 import com.luizalabs.desafio.provider.api.product.exception.ProductNotFoundException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -90,18 +90,18 @@ internal class ProductApiProviderTest {
 
         this.toMockClientGet(
             parameter,
-            HttpStatus.INTERNAL_SERVER_ERROR,
+            HttpStatus.NOT_FOUND,
             """
                 {
-                    "statusCode": 500,
-                    "error": "Internal Server Error",
-                    "message": "Não foi possível obter o produto",
+                    "statusCode": 404,
+                    "error": "Not Found",
+                    "message": "Página não encontrada",
                     "code": null
                 }
                 """
         )
 
-        assertThrows<ProductInternalServerErrorException> { this.provider.findAll(page) }
+        assertThrows<PageNotFoundException> { this.provider.findAll(page) }
     }
 
     @Test

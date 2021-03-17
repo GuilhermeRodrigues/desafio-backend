@@ -3,9 +3,9 @@ package com.luizalabs.desafio.provider.api.product
 import com.luizalabs.desafio.annotation.ApiProvider
 import com.luizalabs.desafio.config.http.HttpClient
 import com.luizalabs.desafio.config.http.getBody
+import com.luizalabs.desafio.core.exception.PageNotFoundException
 import com.luizalabs.desafio.core.gateway.ProductFindAllGateway
 import com.luizalabs.desafio.core.gateway.ProductFindByIdGateway
-import com.luizalabs.desafio.provider.api.product.exception.ProductInternalServerErrorException
 import com.luizalabs.desafio.provider.api.product.exception.ProductNotFoundException
 import com.luizalabs.desafio.provider.api.product.response.Product
 import com.luizalabs.desafio.provider.api.product.response.ProductResponse
@@ -26,7 +26,7 @@ class ProductApiProvider(
             )
 
         if (response.statusCode != HttpStatus.OK) {
-            throw ProductInternalServerErrorException()
+            throw PageNotFoundException()
         }
 
         return response.getBody(ProductResponse::class)!!

@@ -1,8 +1,8 @@
 package com.luizalabs.desafio.core.usecase
 
 import com.luizalabs.desafio.annotation.UnitTest
+import com.luizalabs.desafio.core.exception.PageNotFoundException
 import com.luizalabs.desafio.core.gateway.ProductFindAllGateway
-import com.luizalabs.desafio.provider.api.product.exception.ProductInternalServerErrorException
 import com.luizalabs.desafio.provider.api.product.response.ProductResponse
 import com.luizalabs.desafio.util.test.createMockInstance
 import org.junit.jupiter.api.Test
@@ -46,9 +46,9 @@ internal class ProductFindAllUseCaseTest {
     fun `Listar os produtos com erro interno`() {
         Mockito
             .`when`(this.productFindAllGateway.findAll(page = this.page))
-            .thenThrow(ProductInternalServerErrorException())
+            .thenThrow(PageNotFoundException())
 
-        assertThrows<ProductInternalServerErrorException> {
+        assertThrows<PageNotFoundException> {
             this.productFindAllUseCase.execute(this.page)
         }
     }
