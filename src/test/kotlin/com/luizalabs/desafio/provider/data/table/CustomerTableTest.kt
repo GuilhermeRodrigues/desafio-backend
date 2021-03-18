@@ -10,6 +10,8 @@ internal class CustomerTableTest {
     fun serializable1() {
         CustomerTable::class.assertSerializable()
         val table = CustomerTable::class.createMockInstance()
+        table.setLastUpdate()
+
         assertNotNull(table)
     }
 

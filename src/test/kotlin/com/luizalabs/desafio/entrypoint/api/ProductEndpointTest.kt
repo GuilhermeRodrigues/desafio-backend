@@ -56,4 +56,18 @@ internal class ProductEndpointTest {
 
         assertNotNull(result.products)
     }
+
+    @Test
+    fun `product endpoint (get) - findAll without param`() {
+        val page = 0
+
+        val productResponse = ProductResponse::class.createMockInstance()
+
+        Mockito.`when`(this.productFindAllInteractor.execute(page))
+            .thenReturn(productResponse)
+
+        val result = this.productEndpoint.findAll()
+
+        assertNotNull(result.products)
+    }
 }

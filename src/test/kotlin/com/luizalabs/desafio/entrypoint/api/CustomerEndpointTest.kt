@@ -146,6 +146,20 @@ internal class CustomerEndpointTest {
     }
 
     @Test
+    fun `customer endpoint (get) - findAll withou params`() {
+        val page = PageRequest.of(0, 10, Sort.by("createdAt").descending())
+
+        val customerPage = PageImpl(Customer::class.createMockInstances(3))
+
+        Mockito.`when`(this.customerFindAllInteractor.execute(page))
+            .thenReturn(customerPage)
+
+        val result = this.customerEndpoint.findAll()
+
+        assertNotNull(result.body)
+    }
+
+    @Test
     fun `customer favorite endpoint (post)`() {
         val product = Product::class.createMockInstance().copy(id = this.productId)
         val customer = Customer::class.createMockInstance().copy(id = this.customerId)
