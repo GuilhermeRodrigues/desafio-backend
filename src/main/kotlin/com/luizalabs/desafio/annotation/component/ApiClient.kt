@@ -1,4 +1,4 @@
-package com.luizalabs.desafio.annotation
+package com.luizalabs.desafio.annotation.component
 
 import org.springframework.context.annotation.Configuration
 

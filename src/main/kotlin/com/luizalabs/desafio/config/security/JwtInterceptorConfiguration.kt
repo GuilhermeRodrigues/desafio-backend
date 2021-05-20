@@ -1,6 +1,6 @@
 package com.luizalabs.desafio.config.security
 
-import com.luizalabs.desafio.annotation.ExcludeAuthentication
+import com.luizalabs.desafio.annotation.config.ExcludeAuthentication
 import com.luizalabs.desafio.util.jwt.JwtUtil
 import org.springframework.context.ApplicationContext
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken

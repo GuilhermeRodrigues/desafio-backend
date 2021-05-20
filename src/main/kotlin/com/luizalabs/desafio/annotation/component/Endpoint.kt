@@ -1,4 +1,4 @@
-package com.luizalabs.desafio.annotation
+package com.luizalabs.desafio.annotation.component
 
 import org.springframework.core.annotation.AliasFor
 import org.springframework.web.bind.annotation.RequestMapping

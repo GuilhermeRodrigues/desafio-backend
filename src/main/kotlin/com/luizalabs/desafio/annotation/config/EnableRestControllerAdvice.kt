@@ -1,4 +1,4 @@
-package com.luizalabs.desafio.annotation
+package com.luizalabs.desafio.annotation.config
 
 import com.luizalabs.desafio.config.advice.SpringRestControllerAdvice
 import org.springframework.context.annotation.Configuration

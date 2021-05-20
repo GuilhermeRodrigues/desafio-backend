@@ -1,6 +1,6 @@
 package com.luizalabs.desafio.provider.data
 
-import com.luizalabs.desafio.annotation.UnitTest
+import com.luizalabs.desafio.annotation.test.UnitTest
 import com.luizalabs.desafio.core.domain.Customer
 import com.luizalabs.desafio.core.exception.CustomerNotFoundException
 import com.luizalabs.desafio.core.exception.PageNotFoundException

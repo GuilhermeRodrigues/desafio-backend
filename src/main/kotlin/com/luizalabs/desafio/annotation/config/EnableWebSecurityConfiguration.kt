@@ -1,12 +1,12 @@
-package com.luizalabs.desafio.annotation
+package com.luizalabs.desafio.annotation.config
 
-import com.luizalabs.desafio.config.swagger.SwaggerConfiguration
+import com.luizalabs.desafio.config.security.WebSecurityConfiguration
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.CLASS)
 @MustBeDocumented
-@Import(SwaggerConfiguration::class)
+@Import(WebSecurityConfiguration::class)
 @Configuration
-annotation class EnableSwaggerConfiguration
+annotation class EnableWebSecurityConfiguration

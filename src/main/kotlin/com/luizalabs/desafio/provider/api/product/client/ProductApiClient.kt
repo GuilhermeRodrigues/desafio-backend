@@ -1,6 +1,6 @@
 package com.luizalabs.desafio.provider.api.product.client
 
-import com.luizalabs.desafio.annotation.ApiClient
+import com.luizalabs.desafio.annotation.component.ApiClient
 import com.luizalabs.desafio.config.http.HttpClient
 import com.luizalabs.desafio.config.http.RestTemplateHttpClient
 import org.springframework.beans.factory.annotation.Value

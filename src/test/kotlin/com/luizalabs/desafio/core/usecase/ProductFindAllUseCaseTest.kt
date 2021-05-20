@@ -1,6 +1,6 @@
 package com.luizalabs.desafio.core.usecase
 
-import com.luizalabs.desafio.annotation.UnitTest
+import com.luizalabs.desafio.annotation.test.UnitTest
 import com.luizalabs.desafio.core.exception.PageNotFoundException
 import com.luizalabs.desafio.core.gateway.ProductFindAllGateway
 import com.luizalabs.desafio.provider.api.product.response.ProductResponse

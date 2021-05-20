@@ -1,6 +1,6 @@
 package com.luizalabs.desafio.core.usecase
 
-import com.luizalabs.desafio.annotation.UseCase
+import com.luizalabs.desafio.annotation.component.UseCase
 import com.luizalabs.desafio.core.gateway.ProductFindByIdGateway
 import com.luizalabs.desafio.core.interactor.ProductFindByIdInteractor
 import java.util.UUID

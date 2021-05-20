@@ -1,4 +1,4 @@
-package com.luizalabs.desafio.annotation
+package com.luizalabs.desafio.annotation.test
 
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.junit.jupiter.MockitoExtension

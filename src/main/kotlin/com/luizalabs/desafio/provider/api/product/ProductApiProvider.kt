@@ -1,6 +1,6 @@
 package com.luizalabs.desafio.provider.api.product
 
-import com.luizalabs.desafio.annotation.ApiProvider
+import com.luizalabs.desafio.annotation.component.ApiProvider
 import com.luizalabs.desafio.config.http.HttpClient
 import com.luizalabs.desafio.config.http.getBody
 import com.luizalabs.desafio.core.exception.PageNotFoundException

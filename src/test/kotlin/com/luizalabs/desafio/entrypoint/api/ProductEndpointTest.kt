@@ -1,6 +1,6 @@
 package com.luizalabs.desafio.entrypoint.api
 
-import com.luizalabs.desafio.annotation.UnitTest
+import com.luizalabs.desafio.annotation.test.UnitTest
 import com.luizalabs.desafio.core.interactor.ProductFindAllInteractor
 import com.luizalabs.desafio.core.interactor.ProductFindByIdInteractor
 import com.luizalabs.desafio.provider.api.product.response.Product

@@ -1,6 +1,6 @@
 package com.luizalabs.desafio.entrypoint.api
 
-import com.luizalabs.desafio.annotation.Endpoint
+import com.luizalabs.desafio.annotation.component.Endpoint
 import com.luizalabs.desafio.core.interactor.CustomerAddFavoriteInteractor
 import com.luizalabs.desafio.core.interactor.CustomerCreateInteractor
 import com.luizalabs.desafio.core.interactor.CustomerDeleteInteractor
@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import java.util.UUID
+import javax.validation.Valid
 import javax.validation.constraints.Max
 
 @Validated
@@ -60,7 +61,7 @@ class CustomerEndpoint(
             ]
     )
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody(required = true) request: CustomerCreateRequest): CustomerResponse {
+    fun create(@RequestBody @Valid request: CustomerCreateRequest): CustomerResponse {
         return this.customerCreateInteractor.execute(customerCreateRequest = request).toCustomerResponse()
     }
 
