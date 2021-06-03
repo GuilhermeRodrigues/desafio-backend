@@ -1,6 +1,6 @@
 package com.luizalabs.desafio.core.interactor
 
-import com.luizalabs.desafio.core.domain.Favorite
+import com.luizalabs.desafio.core.domain.entity.Favorite
 import com.luizalabs.desafio.core.exception.FavoriteNotFoundException
 import java.util.UUID
 import kotlin.jvm.Throws

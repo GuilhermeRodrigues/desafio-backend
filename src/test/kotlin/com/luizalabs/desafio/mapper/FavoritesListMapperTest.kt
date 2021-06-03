@@ -1,6 +1,6 @@
 package com.luizalabs.desafio.mapper
 
-import com.luizalabs.desafio.core.domain.FavoritesList
+import com.luizalabs.desafio.core.domain.entity.FavoritesList
 import com.luizalabs.desafio.provider.data.table.FavoritesListTable
 import com.luizalabs.desafio.util.test.createMockInstance
 import org.junit.jupiter.api.Test

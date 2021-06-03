@@ -1,7 +1,7 @@
 package com.luizalabs.desafio.provider.data
 
 import com.luizalabs.desafio.annotation.test.IntegrationDataTest
-import com.luizalabs.desafio.core.domain.Customer
+import com.luizalabs.desafio.core.domain.entity.Customer
 import com.luizalabs.desafio.core.exception.CustomerNotFoundException
 import com.luizalabs.desafio.core.exception.PageNotFoundException
 import com.luizalabs.desafio.mapper.toCore

@@ -1,9 +1,9 @@
 package com.luizalabs.desafio.provider.data
 
 import com.luizalabs.desafio.annotation.test.IntegrationDataTest
-import com.luizalabs.desafio.core.domain.Customer
-import com.luizalabs.desafio.core.domain.Favorite
-import com.luizalabs.desafio.core.domain.FavoritesList
+import com.luizalabs.desafio.core.domain.entity.Customer
+import com.luizalabs.desafio.core.domain.entity.Favorite
+import com.luizalabs.desafio.core.domain.entity.FavoritesList
 import com.luizalabs.desafio.mapper.toCore
 import com.luizalabs.desafio.mapper.toTable
 import com.luizalabs.desafio.provider.data.repository.CustomerRepository

@@ -15,6 +15,7 @@ import com.luizalabs.desafio.entrypoint.api.request.CustomerUpdateRequest
 import com.luizalabs.desafio.entrypoint.api.response.CustomerResponse
 import com.luizalabs.desafio.entrypoint.api.response.FavoriteResponse
 import com.luizalabs.desafio.mapper.toCustomerResponse
+import com.luizalabs.desafio.mapper.toDto
 import com.luizalabs.desafio.mapper.toFavoriteResponse
 import com.luizalabs.desafio.util.toResponseEntity
 import io.swagger.annotations.Api
@@ -62,7 +63,7 @@ class CustomerEndpoint(
     )
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody @Valid request: CustomerCreateRequest): CustomerResponse {
-        return this.customerCreateInteractor.execute(customerCreateRequest = request).toCustomerResponse()
+        return this.customerCreateInteractor.execute(customerCreateDto = request.toDto()).toCustomerResponse()
     }
 
     @ApiOperation(value = "Atualizar um cliente")
@@ -77,7 +78,7 @@ class CustomerEndpoint(
     )
     @ResponseStatus(HttpStatus.OK)
     fun update(@PathVariable id: UUID, @RequestBody(required = true) request: CustomerUpdateRequest): CustomerResponse {
-        return this.customerUpdateInteractor.execute(id = id, customerUpdateRequest = request).toCustomerResponse()
+        return this.customerUpdateInteractor.execute(id = id, customerUpdateDto = request.toDto()).toCustomerResponse()
     }
 
     @ApiOperation(value = "Excluir um cliente")
@@ -145,7 +146,7 @@ class CustomerEndpoint(
     )
     @ResponseStatus(HttpStatus.CREATED)
     fun addFavorite(@PathVariable customerId: UUID, @RequestBody(required = true) request: CustomerFavoriteRequest): FavoriteResponse {
-        val favorite = this.customerAddFavoriteInteractor.execute(customerId = customerId, customerFavoriteRequest = request)
+        val favorite = this.customerAddFavoriteInteractor.execute(customerId = customerId, customerFavoriteDto = request.toDto())
 
         return favorite.toFavoriteResponse(listOf(favorite.product))
     }
@@ -179,7 +180,7 @@ class CustomerEndpoint(
     )
     @ResponseStatus(HttpStatus.OK)
     fun removeFavorite(@PathVariable customerId: UUID, @RequestBody(required = true) request: CustomerFavoriteRequest): FavoriteResponse {
-        val favorite = this.customerRemoveFavoriteInteractor.execute(customerId = customerId, customerFavoriteRequest = request)
+        val favorite = this.customerRemoveFavoriteInteractor.execute(customerId = customerId, customerFavoriteDto = request.toDto())
 
         return favorite.toFavoriteResponse(listOf(favorite.product))
     }

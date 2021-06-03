@@ -1,6 +1,6 @@
 package com.luizalabs.desafio.mapper
 
-import com.luizalabs.desafio.core.domain.Favorite
+import com.luizalabs.desafio.core.domain.entity.Favorite
 import com.luizalabs.desafio.provider.api.product.response.Product
 import com.luizalabs.desafio.provider.data.table.FavoriteTable
 import com.luizalabs.desafio.util.test.createMockInstance

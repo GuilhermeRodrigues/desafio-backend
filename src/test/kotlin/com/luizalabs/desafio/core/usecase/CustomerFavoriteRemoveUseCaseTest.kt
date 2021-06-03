@@ -1,16 +1,16 @@
 package com.luizalabs.desafio.core.usecase
 
 import com.luizalabs.desafio.annotation.test.UnitTest
-import com.luizalabs.desafio.core.domain.Customer
-import com.luizalabs.desafio.core.domain.Favorite
-import com.luizalabs.desafio.core.domain.FavoritesList
+import com.luizalabs.desafio.core.domain.dto.CustomerFavoriteDto
+import com.luizalabs.desafio.core.domain.entity.Customer
+import com.luizalabs.desafio.core.domain.entity.Favorite
+import com.luizalabs.desafio.core.domain.entity.FavoritesList
 import com.luizalabs.desafio.core.exception.CustomerNotFoundException
 import com.luizalabs.desafio.core.exception.FavoriteNotFoundException
 import com.luizalabs.desafio.core.gateway.CustomerFindByIdGateway
 import com.luizalabs.desafio.core.gateway.FavoriteFindByFavoritesListIdAndDeletedAtIsNullGateway
 import com.luizalabs.desafio.core.gateway.FavoriteSaveGateway
 import com.luizalabs.desafio.core.gateway.FavoritesListFindByCustomerIdGateway
-import com.luizalabs.desafio.entrypoint.api.request.CustomerFavoriteRequest
 import com.luizalabs.desafio.util.test.anyObject
 import com.luizalabs.desafio.util.test.createMockInstance
 import org.junit.jupiter.api.Test
@@ -80,7 +80,7 @@ internal class CustomerFavoriteRemoveUseCaseTest {
             deletedAt = LocalDateTime.now()
         )
 
-        val customerFavoriteRequest = CustomerFavoriteRequest::class.createMockInstance().copy(
+        val customerFavoriteDto = CustomerFavoriteDto::class.createMockInstance().copy(
             productId = newFavorite.product.id
         )
 
@@ -106,7 +106,7 @@ internal class CustomerFavoriteRemoveUseCaseTest {
             .`when`(this.favoriteSaveGateway.save(anyObject(Favorite::class.java)))
             .thenReturn(newFavorite)
 
-        val result = this.customerFavoriteRemoveUseCase.execute(this.customerId, customerFavoriteRequest)
+        val result = this.customerFavoriteRemoveUseCase.execute(this.customerId, customerFavoriteDto)
 
         this.verifyAllMethodsCalled()
         assertEquals(result.id, favorite.id)
@@ -115,14 +115,14 @@ internal class CustomerFavoriteRemoveUseCaseTest {
 
     @Test
     fun `Remover o favorito do cliente com erro de cliente não encontrado`() {
-        val customerFavoriteRequest = CustomerFavoriteRequest::class.createMockInstance()
+        val customerFavoriteDto = CustomerFavoriteDto::class.createMockInstance()
 
         Mockito
             .`when`(this.customerFindByIdGateway.findById(id = this.customerId))
             .thenThrow(CustomerNotFoundException())
 
         assertThrows<CustomerNotFoundException> {
-            this.customerFavoriteRemoveUseCase.execute(this.customerId, customerFavoriteRequest)
+            this.customerFavoriteRemoveUseCase.execute(this.customerId, customerFavoriteDto)
         }
     }
 
@@ -132,7 +132,7 @@ internal class CustomerFavoriteRemoveUseCaseTest {
             id = this.customerId
         )
 
-        val customerFavoriteRequest = CustomerFavoriteRequest::class.createMockInstance()
+        val customerFavoriteDto = CustomerFavoriteDto::class.createMockInstance()
 
         Mockito
             .`when`(this.customerFindByIdGateway.findById(id = this.customerId))
@@ -146,7 +146,7 @@ internal class CustomerFavoriteRemoveUseCaseTest {
             .thenReturn(null)
 
         assertThrows<FavoriteNotFoundException> {
-            this.customerFavoriteRemoveUseCase.execute(this.customerId, customerFavoriteRequest)
+            this.customerFavoriteRemoveUseCase.execute(this.customerId, customerFavoriteDto)
         }
     }
 
@@ -161,7 +161,7 @@ internal class CustomerFavoriteRemoveUseCaseTest {
             customer = customer
         )
 
-        val customerFavoriteRequest = CustomerFavoriteRequest::class.createMockInstance()
+        val customerFavoriteDto = CustomerFavoriteDto::class.createMockInstance()
 
         Mockito
             .`when`(this.customerFindByIdGateway.findById(id = this.customerId))
@@ -182,7 +182,7 @@ internal class CustomerFavoriteRemoveUseCaseTest {
             .thenReturn(null)
 
         assertThrows<FavoriteNotFoundException> {
-            this.customerFavoriteRemoveUseCase.execute(this.customerId, customerFavoriteRequest)
+            this.customerFavoriteRemoveUseCase.execute(this.customerId, customerFavoriteDto)
         }
     }
 }

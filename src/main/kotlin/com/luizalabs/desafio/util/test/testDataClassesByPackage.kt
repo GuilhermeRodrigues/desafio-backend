@@ -1,6 +1,5 @@
 package com.luizalabs.desafio.util.test
 
-import org.slf4j.LoggerFactory
 import java.net.URL
 import java.net.URLClassLoader
 import java.nio.file.Files
@@ -10,7 +9,6 @@ import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubclassOf
 
 fun testDataClassesByPackage(packageTest: String, directoryTest: String? = "src/main/kotlin") {
-    val logger = LoggerFactory.getLogger("testDataClassesByPackage")
 
     Files.list(Paths.get(System.getProperty("user.dir"), "/$directoryTest/${packageTest.replace(".", "/")}")).forEach {
         try {

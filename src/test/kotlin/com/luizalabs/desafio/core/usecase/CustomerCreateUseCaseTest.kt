@@ -1,11 +1,11 @@
 package com.luizalabs.desafio.core.usecase
 
 import com.luizalabs.desafio.annotation.test.UnitTest
-import com.luizalabs.desafio.core.domain.Customer
+import com.luizalabs.desafio.core.domain.dto.CustomerCreateDto
+import com.luizalabs.desafio.core.domain.entity.Customer
 import com.luizalabs.desafio.core.exception.EmailAlreadyUsedException
 import com.luizalabs.desafio.core.gateway.CustomerFindByEmailGateway
 import com.luizalabs.desafio.core.gateway.CustomerSaveGateway
-import com.luizalabs.desafio.entrypoint.api.request.CustomerCreateRequest
 import com.luizalabs.desafio.util.test.anyObject
 import com.luizalabs.desafio.util.test.createMockInstance
 import org.junit.jupiter.api.Test
@@ -28,7 +28,7 @@ internal class CustomerCreateUseCaseTest {
 
     private val name = "João da Silva"
     private val email = "teste@teste.com"
-    private val customerCreateRequest = CustomerCreateRequest::class.createMockInstance()
+    private val customerCreateDto = CustomerCreateDto::class.createMockInstance()
         .copy(
             name = name,
             email = email
@@ -59,7 +59,7 @@ internal class CustomerCreateUseCaseTest {
             .`when`(this.customerSaveGateway.save(anyObject()))
             .thenReturn(customer)
 
-        val result = this.customerCreateUseCase.execute(this.customerCreateRequest)
+        val result = this.customerCreateUseCase.execute(this.customerCreateDto)
 
         this.verifyAllMethodsCalled()
         assertEquals(customer.name, result.name)
@@ -78,7 +78,7 @@ internal class CustomerCreateUseCaseTest {
             .thenReturn(customer)
 
         assertThrows<EmailAlreadyUsedException> {
-            this.customerCreateUseCase.execute(this.customerCreateRequest)
+            this.customerCreateUseCase.execute(this.customerCreateDto)
         }
     }
 }

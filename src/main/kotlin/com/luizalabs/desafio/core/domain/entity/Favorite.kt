@@ -1,4 +1,4 @@
-package com.luizalabs.desafio.core.domain
+package com.luizalabs.desafio.core.domain.entity
 
 import com.luizalabs.desafio.provider.api.product.response.Product
 import java.time.LocalDateTime

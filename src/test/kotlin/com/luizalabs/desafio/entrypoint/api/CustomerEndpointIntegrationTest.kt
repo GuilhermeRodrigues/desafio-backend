@@ -3,8 +3,8 @@ package com.luizalabs.desafio.entrypoint.api
 import com.fasterxml.jackson.core.type.TypeReference
 import com.luizalabs.desafio.EndpointTest
 import com.luizalabs.desafio.config.getObjectMapper
-import com.luizalabs.desafio.core.domain.Customer
-import com.luizalabs.desafio.core.domain.Favorite
+import com.luizalabs.desafio.core.domain.entity.Customer
+import com.luizalabs.desafio.core.domain.entity.Favorite
 import com.luizalabs.desafio.core.interactor.CustomerAddFavoriteInteractor
 import com.luizalabs.desafio.core.interactor.CustomerCreateInteractor
 import com.luizalabs.desafio.core.interactor.CustomerDeleteInteractor
@@ -19,6 +19,7 @@ import com.luizalabs.desafio.entrypoint.api.request.CustomerUpdateRequest
 import com.luizalabs.desafio.entrypoint.api.response.CustomerResponse
 import com.luizalabs.desafio.entrypoint.api.response.FavoriteResponse
 import com.luizalabs.desafio.mapper.toCustomerResponse
+import com.luizalabs.desafio.mapper.toDto
 import com.luizalabs.desafio.mapper.toFavoriteResponse
 import com.luizalabs.desafio.provider.api.product.response.Product
 import com.luizalabs.desafio.util.test.anyObject
@@ -93,7 +94,7 @@ internal class CustomerEndpointIntegrationTest : EndpointTest() {
             name = newName,
         )
 
-        Mockito.`when`(this.customerUpdateInteractor.execute(this.customerId, request)).thenReturn(this.customer.copy(name = newName))
+        Mockito.`when`(this.customerUpdateInteractor.execute(this.customerId, request.toDto())).thenReturn(this.customer.copy(name = newName))
 
         this.restAssured()
             .body(request)
@@ -184,7 +185,7 @@ internal class CustomerEndpointIntegrationTest : EndpointTest() {
             product = product
         )
 
-        Mockito.`when`(this.customerAddFavoriteInteractor.execute(this.customerId, request)).thenReturn(favorite)
+        Mockito.`when`(this.customerAddFavoriteInteractor.execute(this.customerId, request.toDto())).thenReturn(favorite)
 
         this.restAssured()
             .body(request)
@@ -233,7 +234,7 @@ internal class CustomerEndpointIntegrationTest : EndpointTest() {
             product = product
         )
 
-        Mockito.`when`(this.customerRemoveFavoriteInteractor.execute(this.customerId, request)).thenReturn(favorite)
+        Mockito.`when`(this.customerRemoveFavoriteInteractor.execute(this.customerId, request.toDto())).thenReturn(favorite)
 
         this.restAssured()
             .body(request)

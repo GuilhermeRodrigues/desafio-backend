@@ -1,7 +1,7 @@
 package com.luizalabs.desafio.provider.data
 
 import com.luizalabs.desafio.annotation.component.DataProvider
-import com.luizalabs.desafio.core.domain.FavoritesList
+import com.luizalabs.desafio.core.domain.entity.FavoritesList
 import com.luizalabs.desafio.core.gateway.FavoritesListFindByCustomerIdGateway
 import com.luizalabs.desafio.core.gateway.FavoritesListSaveGateway
 import com.luizalabs.desafio.mapper.toCore

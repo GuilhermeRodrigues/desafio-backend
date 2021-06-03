@@ -8,9 +8,7 @@ CREATE TABLE customer
     deleted_at  timestamp        NULL
 );
 
-CREATE UNIQUE INDEX customer_id_unq ON customer (id);
 CREATE UNIQUE INDEX customer_email_unq ON customer (email);
-CREATE INDEX customer_id_idx ON customer (id);
 
 CREATE TABLE favorites_list
 (
@@ -19,9 +17,7 @@ CREATE TABLE favorites_list
     CONSTRAINT favorites_list_customer_fkey FOREIGN KEY (customer_id) REFERENCES customer (id)
 );
 
-CREATE UNIQUE INDEX favorites_list_id_unq ON favorites_list (id);
 CREATE UNIQUE INDEX favorites_list_customer_id_unq ON favorites_list (customer_id);
-CREATE INDEX favorites_list_id_idx ON favorites_list (id);
 
 CREATE TABLE favorite
 (
@@ -32,6 +28,3 @@ CREATE TABLE favorite
     deleted_at          timestamp        NULL,
     CONSTRAINT favorite_favorites_list_fkey FOREIGN KEY (favorites_list_id) REFERENCES favorites_list (id)
 );
-
-CREATE UNIQUE INDEX favorite_id_unq ON favorite (id);
-CREATE INDEX favorites_id_idx ON favorite (id);

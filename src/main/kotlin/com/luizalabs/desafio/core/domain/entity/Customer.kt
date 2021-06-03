@@ -1,4 +1,4 @@
-package com.luizalabs.desafio.core.domain
+package com.luizalabs.desafio.core.domain.entity
 
 import java.time.LocalDateTime
 import java.util.UUID

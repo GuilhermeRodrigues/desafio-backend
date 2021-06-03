@@ -1,9 +1,9 @@
 package com.luizalabs.desafio.entrypoint.api
 
 import com.luizalabs.desafio.annotation.test.UnitTest
-import com.luizalabs.desafio.core.domain.Customer
-import com.luizalabs.desafio.core.domain.Favorite
-import com.luizalabs.desafio.core.domain.FavoritesList
+import com.luizalabs.desafio.core.domain.entity.Customer
+import com.luizalabs.desafio.core.domain.entity.Favorite
+import com.luizalabs.desafio.core.domain.entity.FavoritesList
 import com.luizalabs.desafio.core.interactor.CustomerAddFavoriteInteractor
 import com.luizalabs.desafio.core.interactor.CustomerCreateInteractor
 import com.luizalabs.desafio.core.interactor.CustomerDeleteInteractor
@@ -15,6 +15,7 @@ import com.luizalabs.desafio.core.interactor.CustomerUpdateInteractor
 import com.luizalabs.desafio.entrypoint.api.request.CustomerCreateRequest
 import com.luizalabs.desafio.entrypoint.api.request.CustomerFavoriteRequest
 import com.luizalabs.desafio.entrypoint.api.request.CustomerUpdateRequest
+import com.luizalabs.desafio.mapper.toDto
 import com.luizalabs.desafio.provider.api.product.response.Product
 import com.luizalabs.desafio.util.test.anyObject
 import com.luizalabs.desafio.util.test.createMockInstance
@@ -90,7 +91,7 @@ internal class CustomerEndpointTest {
                 name = "João da Silva"
             )
 
-        Mockito.`when`(this.customerUpdateInteractor.execute(this.customerId, request))
+        Mockito.`when`(this.customerUpdateInteractor.execute(this.customerId, request.toDto()))
             .thenReturn(
                 customer.copy(
                     name = request.name!!
@@ -172,7 +173,7 @@ internal class CustomerEndpointTest {
         )
         val request = CustomerFavoriteRequest(productId = product.id)
 
-        Mockito.`when`(this.customerAddFavoriteInteractor.execute(this.customerId, request))
+        Mockito.`when`(this.customerAddFavoriteInteractor.execute(this.customerId, request.toDto()))
             .thenReturn(favorite)
 
         val result = this.customerEndpoint.addFavorite(this.customerId, request)
@@ -213,7 +214,7 @@ internal class CustomerEndpointTest {
 
         val request = CustomerFavoriteRequest(productId = product.id)
 
-        Mockito.`when`(this.customerRemoveFavoriteInteractor.execute(this.customerId, request))
+        Mockito.`when`(this.customerRemoveFavoriteInteractor.execute(this.customerId, request.toDto()))
             .thenReturn(favorite)
 
         val result = this.customerEndpoint.removeFavorite(this.customerId, request)

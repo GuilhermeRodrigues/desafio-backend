@@ -1,7 +1,6 @@
 package com.luizalabs.desafio.mapper
 
-import com.luizalabs.desafio.core.domain.Customer
-import com.luizalabs.desafio.entrypoint.api.request.CustomerCreateRequest
+import com.luizalabs.desafio.core.domain.entity.Customer
 import com.luizalabs.desafio.provider.data.table.CustomerTable
 import com.luizalabs.desafio.util.test.createMockInstance
 import org.junit.jupiter.api.Test
@@ -18,12 +17,6 @@ internal class CustomerMapperTest {
     fun toTable() {
         val entity = Customer::class.createMockInstance()
         assertNotNull(entity.toTable())
-    }
-
-    @Test
-    fun customerCreateRequestToCore() {
-        val entity = CustomerCreateRequest::class.createMockInstance()
-        assertNotNull(entity.toCore())
     }
 
     @Test

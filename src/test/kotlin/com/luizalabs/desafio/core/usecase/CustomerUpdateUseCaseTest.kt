@@ -1,13 +1,13 @@
 package com.luizalabs.desafio.core.usecase
 
 import com.luizalabs.desafio.annotation.test.UnitTest
-import com.luizalabs.desafio.core.domain.Customer
+import com.luizalabs.desafio.core.domain.dto.CustomerUpdateDto
+import com.luizalabs.desafio.core.domain.entity.Customer
 import com.luizalabs.desafio.core.exception.CustomerNotFoundException
 import com.luizalabs.desafio.core.exception.EmailAlreadyUsedException
 import com.luizalabs.desafio.core.gateway.CustomerFindByEmailGateway
 import com.luizalabs.desafio.core.gateway.CustomerFindByIdGateway
 import com.luizalabs.desafio.core.gateway.CustomerSaveGateway
-import com.luizalabs.desafio.entrypoint.api.request.CustomerUpdateRequest
 import com.luizalabs.desafio.util.test.anyObject
 import com.luizalabs.desafio.util.test.createMockInstance
 import org.junit.jupiter.api.Test
@@ -58,7 +58,7 @@ internal class CustomerUpdateUseCaseTest {
             email = this.email
         )
 
-        val customerUpdateRequest = CustomerUpdateRequest::class.createMockInstance().copy(
+        val customerUpdateDto = CustomerUpdateDto::class.createMockInstance().copy(
             email = this.newEmail
         )
 
@@ -71,29 +71,29 @@ internal class CustomerUpdateUseCaseTest {
             .thenReturn(customer)
 
         Mockito
-            .`when`(this.customerFindByEmailGateway.findByEmail(email = customerUpdateRequest.email!!))
+            .`when`(this.customerFindByEmailGateway.findByEmail(email = customerUpdateDto.email!!))
             .thenReturn(null)
 
         Mockito
             .`when`(this.customerSaveGateway.save(anyObject(Customer::class.java)))
             .thenReturn(newCustomer)
 
-        val result = this.customerUpdateUseCase.execute(this.id, customerUpdateRequest)
+        val result = this.customerUpdateUseCase.execute(this.id, customerUpdateDto)
 
         this.verifyAllMethodsCalled()
-        assertEquals(customerUpdateRequest.email, result.email)
+        assertEquals(customerUpdateDto.email, result.email)
     }
 
     @Test
     fun `Atualizar o cliente com erro de cliente não encontrado`() {
-        val customerUpdateRequest = CustomerUpdateRequest::class.createMockInstance()
+        val customerUpdateDto = CustomerUpdateDto::class.createMockInstance()
 
         Mockito
             .`when`(this.customerFindByIdGateway.findById(id = this.id))
             .thenThrow(CustomerNotFoundException())
 
         assertThrows<CustomerNotFoundException> {
-            this.customerUpdateUseCase.execute(this.id, customerUpdateRequest)
+            this.customerUpdateUseCase.execute(this.id, customerUpdateDto)
         }
     }
 
@@ -104,7 +104,7 @@ internal class CustomerUpdateUseCaseTest {
             email = this.email
         )
 
-        val customerUpdateRequest = CustomerUpdateRequest::class.createMockInstance().copy(
+        val customerUpdateDto = CustomerUpdateDto::class.createMockInstance().copy(
             email = this.newEmail
         )
 
@@ -117,11 +117,11 @@ internal class CustomerUpdateUseCaseTest {
             .thenReturn(customer)
 
         Mockito
-            .`when`(this.customerFindByEmailGateway.findByEmail(email = customerUpdateRequest.email!!))
+            .`when`(this.customerFindByEmailGateway.findByEmail(email = customerUpdateDto.email!!))
             .thenReturn(newCustomer)
 
         assertThrows<EmailAlreadyUsedException> {
-            this.customerUpdateUseCase.execute(this.id, customerUpdateRequest)
+            this.customerUpdateUseCase.execute(this.id, customerUpdateDto)
         }
     }
 }

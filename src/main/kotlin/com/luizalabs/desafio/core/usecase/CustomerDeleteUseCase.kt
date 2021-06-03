@@ -1,7 +1,7 @@
 package com.luizalabs.desafio.core.usecase
 
 import com.luizalabs.desafio.annotation.component.UseCase
-import com.luizalabs.desafio.core.domain.Customer
+import com.luizalabs.desafio.core.domain.entity.Customer
 import com.luizalabs.desafio.core.gateway.CustomerFindByIdGateway
 import com.luizalabs.desafio.core.gateway.CustomerSaveGateway
 import com.luizalabs.desafio.core.interactor.CustomerDeleteInteractor

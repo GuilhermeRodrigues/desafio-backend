@@ -1,4 +1,4 @@
-package com.luizalabs.desafio.core.domain
+package com.luizalabs.desafio.core.domain.entity
 
 import java.util.UUID
 
