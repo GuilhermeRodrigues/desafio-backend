@@ -34,6 +34,7 @@ internal class CustomerUpdateUseCaseTest {
 
     private val id = UUID.fromString("4d2377c8-2bcb-4927-b837-9ab04ff28f79")
     private val name = "João da Silva"
+    private val newName = "José da Silva"
     private val email = "teste@teste.com"
     private val newEmail = "joao@teste.com"
 
@@ -82,6 +83,39 @@ internal class CustomerUpdateUseCaseTest {
 
         this.verifyAllMethodsCalled()
         assertEquals(customerUpdateDto.email, result.email)
+    }
+
+    @Test
+    fun `Atualizar o cliente com sucesso (e-mail nulo)`() {
+        val customer = Customer::class.createMockInstance().copy(
+            name = this.name,
+            email = this.email
+        )
+
+        val customerUpdateDto = CustomerUpdateDto(
+            name = this.newName,
+            email = null
+        )
+
+        val newCustomer = customer.copy(
+            name = this.newName
+        )
+
+        Mockito
+            .`when`(this.customerFindByIdGateway.findById(id = this.id))
+            .thenReturn(customer)
+
+        Mockito
+            .`when`(this.customerFindByEmailGateway.findByEmail(email = ""))
+            .thenReturn(null)
+
+        Mockito
+            .`when`(this.customerSaveGateway.save(anyObject(Customer::class.java)))
+            .thenReturn(newCustomer)
+
+        val result = this.customerUpdateUseCase.execute(this.id, customerUpdateDto)
+
+        assertEquals(customerUpdateDto.name, result.name)
     }
 
     @Test

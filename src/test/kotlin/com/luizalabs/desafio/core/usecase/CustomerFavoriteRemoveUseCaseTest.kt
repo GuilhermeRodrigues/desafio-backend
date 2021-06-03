@@ -11,6 +11,7 @@ import com.luizalabs.desafio.core.gateway.CustomerFindByIdGateway
 import com.luizalabs.desafio.core.gateway.FavoriteFindByFavoritesListIdAndDeletedAtIsNullGateway
 import com.luizalabs.desafio.core.gateway.FavoriteSaveGateway
 import com.luizalabs.desafio.core.gateway.FavoritesListFindByCustomerIdGateway
+import com.luizalabs.desafio.provider.api.product.response.Product
 import com.luizalabs.desafio.util.test.anyObject
 import com.luizalabs.desafio.util.test.createMockInstance
 import org.junit.jupiter.api.Test
@@ -180,6 +181,53 @@ internal class CustomerFavoriteRemoveUseCaseTest {
                     .findByFavoritesListIdAndDeletedAtIsNull(favoritesListId = favoritesList.id)
             )
             .thenReturn(null)
+
+        assertThrows<FavoriteNotFoundException> {
+            this.customerFavoriteRemoveUseCase.execute(this.customerId, customerFavoriteDto)
+        }
+    }
+
+    @Test
+    fun `Remover o favorito do cliente com erro de favorito não encontrado 3`() {
+        val customer = Customer::class.createMockInstance().copy(
+            id = this.customerId
+        )
+
+        val favoritesList = FavoritesList::class.createMockInstance().copy(
+            id = this.favoritesListId,
+            customer = customer
+        )
+
+        val customerFavoriteDto = CustomerFavoriteDto(
+            productId = UUID.fromString("23d27011-27d6-4d35-81ab-c3fe198599d7")
+        )
+
+        val product = Product::class.createMockInstance().copy(
+            id = UUID.fromString("62f98d02-d293-43b0-bf4c-b063af51d3b5")
+        )
+
+        val favorite = Favorite::class.createMockInstance().copy(
+            favoritesList = favoritesList,
+            product = product
+        )
+
+        Mockito
+            .`when`(this.customerFindByIdGateway.findById(id = this.customerId))
+            .thenReturn(customer)
+
+        Mockito
+            .`when`(
+                this.favoritesListFindByCustomerIdGateway
+                    .findByCustomerId(customerId = customer.id)
+            )
+            .thenReturn(favoritesList)
+
+        Mockito
+            .`when`(
+                this.favoriteFindByFavoritesListIdAndDeletedAtIsNullGateway
+                    .findByFavoritesListIdAndDeletedAtIsNull(favoritesListId = favoritesList.id)
+            )
+            .thenReturn(listOf(favorite))
 
         assertThrows<FavoriteNotFoundException> {
             this.customerFavoriteRemoveUseCase.execute(this.customerId, customerFavoriteDto)

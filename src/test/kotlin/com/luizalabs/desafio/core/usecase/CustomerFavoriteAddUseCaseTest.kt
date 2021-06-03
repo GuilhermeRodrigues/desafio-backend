@@ -142,6 +142,100 @@ internal class CustomerFavoriteAddUseCaseTest {
     }
 
     @Test
+    fun `Adicionar o favorito do cliente com sucesso 2`() {
+        val customerFavoriteDto = CustomerFavoriteDto(
+            productId = UUID.fromString("23d27011-27d6-4d35-81ab-c3fe198599d7")
+        )
+
+        val product = Product::class.createMockInstance().copy(
+            id = UUID.fromString("62f98d02-d293-43b0-bf4c-b063af51d3b5")
+        )
+
+        val favorite = Favorite::class.createMockInstance().copy(
+            favoritesList = favoritesList,
+            product = product
+        )
+
+        Mockito
+            .`when`(this.customerFindByIdGateway.findById(id = this.customerId))
+            .thenReturn(customer)
+
+        Mockito
+            .`when`(
+                this.favoritesListFindByCustomerIdGateway
+                    .findByCustomerId(customerId = customer.id)
+            )
+            .thenReturn(this.favoritesList)
+
+        Mockito
+            .`when`(
+                this.favoriteFindByFavoritesListIdAndDeletedAtIsNullGateway
+                    .findByFavoritesListIdAndDeletedAtIsNull(favoritesListId = favoritesList.id)
+            )
+            .thenReturn(listOf(favorite))
+
+        Mockito
+            .`when`(
+                this.productFindByIdGateway
+                    .findById(id = customerFavoriteDto.productId)
+            )
+            .thenReturn(favorite.product)
+
+        Mockito
+            .`when`(this.favoriteSaveGateway.save(anyObject(Favorite::class.java)))
+            .thenReturn(favorite)
+
+        val result = this.customerFavoriteAddUseCase.execute(this.customerId, customerFavoriteDto)
+
+        assertEquals(result.id, favorite.id)
+    }
+
+    @Test
+    fun `Adicionar o favorito do cliente com sucesso 3`() {
+        val customerFavoriteDto = CustomerFavoriteDto::class.createMockInstance().copy(
+            productId = favorite.product.id
+        )
+
+        Mockito
+            .`when`(this.customerFindByIdGateway.findById(id = this.customerId))
+            .thenReturn(customer)
+
+        Mockito
+            .`when`(
+                this.favoritesListFindByCustomerIdGateway
+                    .findByCustomerId(customerId = customer.id)
+            )
+            .thenReturn(null)
+
+        Mockito
+            .`when`(this.favoritesListSaveGateway.save(anyObject(FavoritesList::class.java)))
+            .thenReturn(favoritesList)
+
+        Mockito
+            .`when`(
+                this.favoriteFindByFavoritesListIdAndDeletedAtIsNullGateway
+                    .findByFavoritesListIdAndDeletedAtIsNull(favoritesListId = favoritesList.id)
+            )
+            .thenReturn(null)
+
+        Mockito
+            .`when`(
+                this.productFindByIdGateway
+                    .findById(id = favorite.product.id)
+            )
+            .thenReturn(favorite.product)
+
+        Mockito
+            .`when`(this.favoriteSaveGateway.save(anyObject(Favorite::class.java)))
+            .thenReturn(favorite)
+
+        val result = this.customerFavoriteAddUseCase.execute(this.customerId, customerFavoriteDto)
+
+        this.verifyAllMethodsCalled()
+        assertEquals(result.id, favorite.id)
+    }
+
+    @Test
     fun `Adicionar o favorito do cliente com erro de cliente não encontrado`() {
         val customerFavoriteDto = CustomerFavoriteDto::class.createMockInstance()
 
