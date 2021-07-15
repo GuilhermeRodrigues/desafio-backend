@@ -26,7 +26,6 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -39,7 +38,6 @@ import java.util.UUID
 import javax.validation.Valid
 import javax.validation.constraints.Max
 
-@Validated
 @Endpoint("/v1/customers")
 @Api(tags = ["Clientes"], description = "/v1/customers")
 class CustomerEndpoint(
@@ -77,7 +75,7 @@ class CustomerEndpoint(
             ]
     )
     @ResponseStatus(HttpStatus.OK)
-    fun update(@PathVariable id: UUID, @RequestBody(required = true) request: CustomerUpdateRequest): CustomerResponse {
+    fun update(@PathVariable id: UUID, @RequestBody @Valid request: CustomerUpdateRequest): CustomerResponse {
         return this.customerUpdateInteractor.execute(id = id, customerUpdateDto = request.toDto()).toCustomerResponse()
     }
 
@@ -145,7 +143,7 @@ class CustomerEndpoint(
             ]
     )
     @ResponseStatus(HttpStatus.CREATED)
-    fun addFavorite(@PathVariable customerId: UUID, @RequestBody(required = true) request: CustomerFavoriteRequest): FavoriteResponse {
+    fun addFavorite(@PathVariable customerId: UUID, @RequestBody @Valid request: CustomerFavoriteRequest): FavoriteResponse {
         val favorite = this.customerAddFavoriteInteractor.execute(customerId = customerId, customerFavoriteDto = request.toDto())
 
         return favorite.toFavoriteResponse(listOf(favorite.product))
@@ -179,7 +177,7 @@ class CustomerEndpoint(
             ]
     )
     @ResponseStatus(HttpStatus.OK)
-    fun removeFavorite(@PathVariable customerId: UUID, @RequestBody(required = true) request: CustomerFavoriteRequest): FavoriteResponse {
+    fun removeFavorite(@PathVariable customerId: UUID, @RequestBody @Valid request: CustomerFavoriteRequest): FavoriteResponse {
         val favorite = this.customerRemoveFavoriteInteractor.execute(customerId = customerId, customerFavoriteDto = request.toDto())
 
         return favorite.toFavoriteResponse(listOf(favorite.product))
